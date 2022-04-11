@@ -53,7 +53,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 99999f, aimColliderMask))//for now it aims at everything can be useful for allies we don't wanna aim at.
         {
-            //whatIsBeingAimedAt.position = raycastHit.point;
+            whatIsBeingAimedAt.position = raycastHit.point;
             mousePosition = raycastHit.point;
             Vector3 aimTarget = mousePosition;
             aimTarget.y = transform.position.y;
