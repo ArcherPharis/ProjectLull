@@ -151,13 +151,13 @@ public class ThirdPersonShooterController : MonoBehaviour
                     if (hitTransform.GetComponent<Damagable>() != null)
                     {
                         Debug.Log("I'm damagable");
-                        Instantiate(hitGreen, hitTransform.position, Quaternion.identity);
+                        Instantiate(hitGreen, whatIsBeingAimedAt.transform.position, Quaternion.identity);
                         
                     }
                     else
                     {
                         Debug.Log("I'm not.");
-                        Instantiate(hitRed, hitTransform.position, Quaternion.identity);
+                        Instantiate(hitRed, whatIsBeingAimedAt.transform.position, Quaternion.identity);
                         
                     }
                 }
