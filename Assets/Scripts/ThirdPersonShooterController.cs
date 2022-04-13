@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using UnityEngine.Animations.Rigging;
+using System;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
+    [SerializeField] Rig aimRig;
     [SerializeField]CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField] float lookSensitivity;
     [SerializeField] float aimSensitivity;
@@ -14,10 +17,16 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] Transform whatIsBeingAimedAt;
     [SerializeField] Transform bulletProjectilePrefab;
     [SerializeField] Transform tempBulletSpawn; //TODO will get this from each weapon instead in the future.
+    [SerializeField] Transform hitGreen;
+    [SerializeField] Transform hitRed;
     Animator animator;
     ThirdPersonController thirdPersonController;
     InputComponent playerInput;
-
+    float aimRigWeight = 0f;
+    Transform hitTransform = null;
+    InpurActions inputActions;
+    Inventory inventory;
+    
     Vector3 mousePosition = Vector3.zero;
 
     private void Awake()
@@ -26,9 +35,44 @@ public class ThirdPersonShooterController : MonoBehaviour
         {
             aimVirtualCamera = GameObject.Find("PlayerAimCamera").GetComponent<CinemachineVirtualCamera>();
         }
+        if (inputActions == null)
+        {
+            inputActions = new InpurActions();
+        }
+
+
         thirdPersonController = GetComponent<ThirdPersonController>();
         playerInput = GetComponent<InputComponent>();
         animator = GetComponent<Animator>();
+        inputActions.Player.Interact.performed += ctx => Interact();
+        inventory = GetComponent<Inventory>();
+    }
+
+    private void Interact()
+    {
+        if (inventory.nearItem)
+        {
+            inventory.quededItem.InteractItem();
+            inventory.nearItem = false;
+            inventory.quededItem = null;
+        }
+      
+    }
+
+    private void OnEnable()
+    {
+        if (inputActions != null)
+        {
+            inputActions.Enable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (inputActions != null)
+        {
+            inputActions.Disable();
+        }
     }
 
     // Start is called before the first frame update
@@ -42,9 +86,11 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         PlayerAim();
         PlayerShoot(mousePosition);
+        aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
 
 
     }
+
 
     void RayCastCenter() 
     {
@@ -55,11 +101,17 @@ public class ThirdPersonShooterController : MonoBehaviour
         {
             whatIsBeingAimedAt.position = raycastHit.point;
             mousePosition = raycastHit.point;
+            hitTransform = raycastHit.transform;
             Vector3 aimTarget = mousePosition;
             aimTarget.y = transform.position.y;
             Vector3 aimdDirection = (aimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimdDirection, Time.deltaTime * 20f);
+        }
+        else
+        {
+            whatIsBeingAimedAt.position = ray.GetPoint(20);
+            mousePosition = ray.GetPoint(20);
         }
     }
 
@@ -74,6 +126,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = true;
             RayCastCenter();
+            aimRigWeight = 1f;
         }
         else
         {
@@ -81,7 +134,9 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(lookSensitivity);
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            aimRigWeight = 0f;
             aimingCrosshair.enabled = false;
+            
         }
     }
 
@@ -91,9 +146,23 @@ public class ThirdPersonShooterController : MonoBehaviour
         {
             if (playerInput.shoot)
             {
-                Debug.Log("We're shooting");
-                Vector3 aimDirection = (mouseDirection - tempBulletSpawn.position).normalized;
-                Instantiate(bulletProjectilePrefab, tempBulletSpawn.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+                if(hitTransform != null)
+                {
+                    if (hitTransform.GetComponent<Damagable>() != null)
+                    {
+                        Debug.Log("I'm damagable");
+                        Instantiate(hitGreen, hitTransform.position, Quaternion.identity);
+                        
+                    }
+                    else
+                    {
+                        Debug.Log("I'm not.");
+                        Instantiate(hitRed, hitTransform.position, Quaternion.identity);
+                        
+                    }
+                }
+                //Vector3 aimDirection = (mouseDirection - tempBulletSpawn.position).normalized;
+                //Instantiate(bulletProjectilePrefab, tempBulletSpawn.position, Quaternion.LookRotation(aimDirection, Vector3.up));
                 playerInput.shoot = false;
             }
         }
