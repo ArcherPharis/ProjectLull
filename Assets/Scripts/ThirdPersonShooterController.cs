@@ -107,11 +107,21 @@ public class ThirdPersonShooterController : MonoBehaviour
             Vector3 aimdDirection = (aimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimdDirection, Time.deltaTime * 20f);
+
+            if(hitTransform.gameObject.tag == "Enemy")
+            {
+                aimingCrosshair.color = Color.red;
+            }
+            else
+            {
+                aimingCrosshair.color = Color.white;
+            }
         }
         else
         {
             whatIsBeingAimedAt.position = ray.GetPoint(20);
             mousePosition = ray.GetPoint(20);
+            aimingCrosshair.color = Color.white;
         }
     }
 
