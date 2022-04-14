@@ -126,7 +126,7 @@ using UnityEngine.InputSystem;
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			//CameraRotation();
 		}
 
 		private void AssignAnimationIDs()
