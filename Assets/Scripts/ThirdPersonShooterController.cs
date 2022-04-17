@@ -22,10 +22,10 @@ public class ThirdPersonShooterController : MonoBehaviour
     Animator animator;
     ThirdPersonController thirdPersonController;
     InputComponent playerInput;
-    float aimRigWeight = 0f;
     Transform hitTransform = null;
     InpurActions inputActions;
     Inventory inventory;
+    float aimRigWeight;
     
     Vector3 mousePosition = Vector3.zero;
 
@@ -46,6 +46,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         animator = GetComponent<Animator>();
         inputActions.Player.Interact.performed += ctx => Interact();
         inventory = GetComponent<Inventory>();
+        inventory.SpawnSideSlotOneWeapon();
+        
     }
 
     private void Interact()
@@ -119,8 +121,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         }
         else
         {
-            whatIsBeingAimedAt.position = ray.GetPoint(20);
-            mousePosition = ray.GetPoint(20);
+            whatIsBeingAimedAt.position = ray.GetPoint(200);
+            mousePosition = ray.GetPoint(200);
             aimingCrosshair.color = Color.white;
         }
     }
@@ -133,18 +135,18 @@ public class ThirdPersonShooterController : MonoBehaviour
             thirdPersonController.SetPlayerRotateAim(false);
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
+            aimRigWeight = 1f;
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = true;
             RayCastCenter();
-            aimRigWeight = 1f;
         }
         else
         {
             thirdPersonController.SetPlayerRotateAim(true);
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(lookSensitivity);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
             aimRigWeight = 0f;
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = false;
             
         }
@@ -152,9 +154,9 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     void PlayerShoot(Vector3 mouseDirection)
     {
-        if (playerInput.aim && !playerInput.sprint)
+        if (playerInput.aim && !playerInput.sprint )
         {
-            if (playerInput.shoot)
+            if (playerInput.shoot && inventory.currentWeaponAmmo >= 1)
             {
                 if(hitTransform != null)
                 {
@@ -162,20 +164,29 @@ public class ThirdPersonShooterController : MonoBehaviour
                     {
                         Debug.Log("I'm damagable");
                         Instantiate(hitGreen, whatIsBeingAimedAt.transform.position, Quaternion.identity);
+                        inventory.ReduceCurrentAmmoAmount();
+                        Damagable enemyHit = hitTransform.GetComponent<Damagable>();
+                        enemyHit.DealDamage(inventory.GetWeaponDataForDamage());
+                        enemyHit.Die();
                         
                     }
                     else
                     {
                         Debug.Log("I'm not.");
+                        inventory.ReduceCurrentAmmoAmount();
                         Instantiate(hitRed, whatIsBeingAimedAt.transform.position, Quaternion.identity);
                         
                     }
                 }
+
                 //Vector3 aimDirection = (mouseDirection - tempBulletSpawn.position).normalized;
                 //Instantiate(bulletProjectilePrefab, tempBulletSpawn.position, Quaternion.LookRotation(aimDirection, Vector3.up));
                 playerInput.shoot = false;
             }
+     
         }
             playerInput.shoot = false;//prevents bool from being set to true when not aiming.
     }
+
+
 }
