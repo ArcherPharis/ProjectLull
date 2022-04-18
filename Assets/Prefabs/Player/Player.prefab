@@ -118,7 +118,7 @@ Transform:
   - {fileID: 52626320}
   - {fileID: 1341158248}
   m_Father: {fileID: 5564811495800103716}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &436875907
 MonoBehaviour:
@@ -1343,7 +1343,6 @@ Transform:
   - {fileID: 614711710248943810}
   - {fileID: 6347061281330483656}
   - {fileID: 7774280846021227006}
-  - {fileID: 8880514487088532302}
   - {fileID: 436875908}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1566,6 +1565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a373c1bdbc302c43b8366124e402463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aimRig: {fileID: 0}
   aimVirtualCamera: {fileID: 0}
   lookSensitivity: 1
   aimSensitivity: 0.3
@@ -1575,7 +1575,6 @@ MonoBehaviour:
     m_Bits: 55
   whatIsBeingAimedAt: {fileID: 0}
   bulletProjectilePrefab: {fileID: 4738416058690398, guid: 068381675912eb044a912de01e17f9cd, type: 3}
-  tempBulletSpawn: {fileID: 8880514487088532302}
   hitGreen: {fileID: 2698643812718468119, guid: a7d9e34397de4404cb4dc8c32d143ead, type: 3}
   hitRed: {fileID: 2698643812718468119, guid: 28a4422441a72d5488745b8aa09606bf, type: 3}
 --- !u!114 &630487088
@@ -1592,6 +1591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sidearmSlotOne: {fileID: 3922272031666287515}
   currentlyEquippedWeapon: {fileID: 0}
+  currentWeaponAmmo: 0
   inventory: []
   PistolAmmo: 0
   weaponSlot: {fileID: 1524839309378064974}
@@ -2758,37 +2758,6 @@ Transform:
   - {fileID: 8477259433683602635}
   m_Father: {fileID: 2171607455908743845}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8880514487088532303
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8880514487088532302}
-  m_Layer: 8
-  m_Name: TempBulletSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8880514487088532302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8880514487088532303}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.308, z: 1.633}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5564811495800103716}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8914059971269394819
 GameObject:

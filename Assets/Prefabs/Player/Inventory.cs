@@ -29,6 +29,16 @@ public class Inventory : MonoBehaviour
         currentlyEquippedWeapon = sidearmSlotOne;
     }
 
+    public void FireWeapon()
+    {
+        CurrentWeapon().StartFiring();
+    }
+
+    public void StopFiring()
+    {
+        CurrentWeapon().StopFiring();
+    }
+
     public void SpawnSideSlotOneWeapon() //this method is not needed, instead we will do "on change"
     {
         if(sidearmSlotOne.GetComponent<Weapon>() == null)
@@ -62,6 +72,7 @@ public class Inventory : MonoBehaviour
         currentWeaponAmmo = Mathf.Clamp(currentWeaponAmmo, 0, CurrentWeapon().MaxCapacity);
         currentWeaponAmmo--;
     }
+
 
 
 

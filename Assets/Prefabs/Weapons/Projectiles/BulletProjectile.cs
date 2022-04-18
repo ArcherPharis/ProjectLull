@@ -5,8 +5,6 @@ using UnityEngine;
 public class BulletProjectile : MonoBehaviour
 {
     private Rigidbody rigidBody;
-    [SerializeField] Transform hitGreen;
-    [SerializeField] Transform hitRed;
 
     private void Awake()
     {
@@ -16,8 +14,9 @@ public class BulletProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float speed = 40f;
+        float speed = 120f;
         rigidBody.velocity = transform.forward * speed;
+        Destroy(gameObject, 1f);
     }
 
     // Update is called once per frame
@@ -28,17 +27,6 @@ public class BulletProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Damagable>() != null)
-        {
-            Debug.Log("I'm damagable");
-            Instantiate(hitGreen, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.Log("I'm not.");
-            Instantiate(hitRed, transform.position, Quaternion.identity);
-        }
-        Debug.Log(other.name);
         Destroy(gameObject);
     }
 }

@@ -16,7 +16,6 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] LayerMask aimColliderMask = new LayerMask();
     [SerializeField] Transform whatIsBeingAimedAt;
     [SerializeField] Transform bulletProjectilePrefab;
-    [SerializeField] Transform tempBulletSpawn; //TODO will get this from each weapon instead in the future.
     [SerializeField] Transform hitGreen;
     [SerializeField] Transform hitRed;
     Animator animator;
@@ -93,6 +92,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     }
 
+    
 
     void RayCastCenter() 
     {
@@ -126,6 +126,8 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimingCrosshair.color = Color.white;
         }
     }
+
+
 
     void PlayerAim()
     {
@@ -162,8 +164,8 @@ public class ThirdPersonShooterController : MonoBehaviour
                 {
                     if (hitTransform.GetComponent<Damagable>() != null)
                     {
-                        Debug.Log("I'm damagable");
                         Instantiate(hitGreen, whatIsBeingAimedAt.transform.position, Quaternion.identity);
+                        inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
                         Damagable enemyHit = hitTransform.GetComponent<Damagable>();
                         enemyHit.DealDamage(inventory.GetWeaponDataForDamage());
@@ -172,21 +174,22 @@ public class ThirdPersonShooterController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("I'm not.");
+                        inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
                         Instantiate(hitRed, whatIsBeingAimedAt.transform.position, Quaternion.identity);
                         
                     }
                 }
 
-                //Vector3 aimDirection = (mouseDirection - tempBulletSpawn.position).normalized;
-                //Instantiate(bulletProjectilePrefab, tempBulletSpawn.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+                Vector3 aimDirection = (mouseDirection - inventory.CurrentWeapon().firingPoint.position).normalized;
+                Instantiate(bulletProjectilePrefab, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
                 playerInput.shoot = false;
+                
             }
      
         }
             playerInput.shoot = false;//prevents bool from being set to true when not aiming.
+            
     }
-
 
 }
