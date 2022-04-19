@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1308403569615522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25460455, y: 0.25460455, z: 0.25460455}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4419243995105470}
@@ -4951,7 +4951,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.30120468
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -5024,8 +5024,8 @@ GameObject:
   - component: {fileID: 54705770189447398}
   - component: {fileID: -8676629858285782062}
   m_Layer: 0
-  m_Name: vfx_Projectile_BulletOrange 1
-  m_TagString: Untagged
+  m_Name: ISP_Projectile
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5039,7 +5039,7 @@ Transform:
   m_GameObject: {fileID: 1830508508936448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.65, y: 2, z: -0.05}
-  m_LocalScale: {x: 0.3636, y: 0.3636, z: 0.3636}
+  m_LocalScale: {x: 0.19326793, y: 0.19326793, z: 0.19326793}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4087260153558326}
@@ -5063,8 +5063,8 @@ MonoBehaviour:
   rotateAmount: 45
   bounce: 0
   bounceForce: 10
-  speed: 120
-  accuracy: 20
+  speed: 60
+  accuracy: 100
   fireRate: 5
   muzzlePrefab: {fileID: 0}
   hitPrefab: {fileID: 0}
@@ -9911,7 +9911,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &-8676629858285782062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9924,3 +9924,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470e869ce4257fc4093405416da74772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffect: {fileID: 1801918589960200, guid: 31e08f66ceeac5545b743dd22aeb09ec, type: 3}

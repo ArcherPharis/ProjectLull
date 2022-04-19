@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject sidearmSlotOne;
@@ -34,10 +36,12 @@ public class Inventory : MonoBehaviour
         CurrentWeapon().StartFiring();
     }
 
-    public void StopFiring()
+    public void WeaponOutOfAmmo()
     {
-        CurrentWeapon().StopFiring();
+        CurrentWeapon().OutOfAmmo();
     }
+
+
 
     public void SpawnSideSlotOneWeapon() //this method is not needed, instead we will do "on change"
     {

@@ -9,8 +9,9 @@ public class ISP : Weapon
         base.StartFiring();
     }
 
-    public override void StopFiring()
+
+    public override void OutOfAmmo()
     {
-        base.StopFiring();
+        base.OutOfAmmo();
     }
 }

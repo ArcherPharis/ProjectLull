@@ -8,10 +8,15 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] string weaponName;
     [SerializeField] float weaponDamage;
     [SerializeField] int maxCapacity;
-    public ParticleSystem[] muzzleFlash;
+    [SerializeField] float fireRate;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] ParticleSystem[] muzzleEffect;
+    [Tooltip("Order: Fire, Dryfire, Reload, Equip")]
+    [SerializeField] AudioClip[] audioClips;
+    public GameObject hitEffect;
+    public GameObject fireEffect;
     public Transform firingPoint;
     public Sprite weaponSprite;
-    public bool isFiring = false;
 
     public string WeaponName
     {
@@ -25,6 +30,11 @@ public abstract class Weapon : MonoBehaviour
         get { return weaponDamage; }
         set { weaponDamage = value; }
     }
+    public float FireRate
+    {
+        get { return fireRate; }
+        set { fireRate = value; }
+    }
 
     public int MaxCapacity
     {
@@ -36,9 +46,8 @@ public abstract class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //may not work on changed weapons idk, could move to update, let's see. Might also have to be part of a method.
-        muzzleFlash = GetComponentsInChildren<ParticleSystem>();
 
+        muzzleEffect = GetComponentsInChildren<ParticleSystem>();
         
         
     }
@@ -51,16 +60,19 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void StartFiring()
     {
-        isFiring = true;
-        foreach(ParticleSystem muzzleFlashes in muzzleFlash)
-        {
-            muzzleFlashes.Play();
-        }
+        audioSource.clip = audioClips[0];
+        audioSource.Play();
 
+        foreach(ParticleSystem ps in muzzleEffect)
+        {
+            ps.Play();
+        }
         
     }
-    public virtual void StopFiring()
+
+    public virtual void OutOfAmmo()
     {
-        isFiring = false;
+        audioSource.clip = audioClips[1];
+        audioSource.Play();
     }
 }

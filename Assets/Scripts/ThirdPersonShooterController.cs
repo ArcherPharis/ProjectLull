@@ -5,6 +5,7 @@ using Cinemachine;
 using UnityEngine.UI;
 using UnityEngine.Animations.Rigging;
 using System;
+using Random = UnityEngine.Random;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class ThirdPersonShooterController : MonoBehaviour
     InpurActions inputActions;
     Inventory inventory;
     float aimRigWeight;
+    float fireTime;
+
     
     Vector3 mousePosition = Vector3.zero;
 
@@ -76,11 +79,6 @@ public class ThirdPersonShooterController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -98,7 +96,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         Vector2 centerOfScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(centerOfScreen); //creates a ray originating from camera and going to the center of the screen.
-        
+
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 99999f, aimColliderMask))//for now it aims at everything can be useful for allies we don't wanna aim at.
         {
             whatIsBeingAimedAt.position = raycastHit.point;
@@ -156,7 +154,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     void PlayerShoot(Vector3 mouseDirection)
     {
-        if (playerInput.aim && !playerInput.sprint )
+        if (playerInput.aim && !playerInput.sprint && Time.time >= fireTime)
         {
             if (playerInput.shoot && inventory.currentWeaponAmmo >= 1)
             {
@@ -164,27 +162,32 @@ public class ThirdPersonShooterController : MonoBehaviour
                 {
                     if (hitTransform.GetComponent<Damagable>() != null)
                     {
-                        Instantiate(hitGreen, whatIsBeingAimedAt.transform.position, Quaternion.identity);
+                        
                         inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
-                        Damagable enemyHit = hitTransform.GetComponent<Damagable>();
-                        enemyHit.DealDamage(inventory.GetWeaponDataForDamage());
-                        enemyHit.Die();
-                        
+                        fireTime = Time.time + 1f / inventory.CurrentWeapon().FireRate;
+   
+
                     }
                     else
                     {
                         inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
-                        Instantiate(hitRed, whatIsBeingAimedAt.transform.position, Quaternion.identity);
-                        
+                        fireTime = Time.time + 1f / inventory.CurrentWeapon().FireRate;
+
                     }
                 }
 
                 Vector3 aimDirection = (mouseDirection - inventory.CurrentWeapon().firingPoint.position).normalized;
-                Instantiate(bulletProjectilePrefab, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+                GameObject bullet = Instantiate(inventory.CurrentWeapon().fireEffect, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+                BulletProjectile bp = bullet.GetComponent<BulletProjectile>();
+                bp.damage = inventory.CurrentWeapon().WeaponDamage;
                 playerInput.shoot = false;
                 
+            }
+            else if (playerInput.shoot && inventory.currentWeaponAmmo <= 0)
+            {
+                inventory.WeaponOutOfAmmo();
             }
      
         }
