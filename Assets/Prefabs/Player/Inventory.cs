@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     //public int currentWeaponAmmo;
     [SerializeField] List<Item> inventory = new List<Item>();
     [SerializeField] int PistolAmmo;
+    [SerializeField] int ShotGunAmmo;
     [SerializeField] Transform weaponSlot;
     public bool nearItem = false;
     public Interactable quededItem;
@@ -27,6 +28,12 @@ public class Inventory : MonoBehaviour
         set { PistolAmmo = value; }
     }
 
+    public int SHAmmo
+    {
+        get { return ShotGunAmmo; }
+        set { ShotGunAmmo = value; }
+    }
+
     public void SwitchWeapon()
     {
 
@@ -34,7 +41,7 @@ public class Inventory : MonoBehaviour
         {
             sidearmSlotOne.SetActive(false);
             currentlyEquippedWeapon = primarySlotOne;
-            //currentWeaponAmmo = CurrentWeapon().CurrentAmmo;
+            CurrentWeapon().OnSwapWeapon();
             primarySlotOne.SetActive(true);
         }
 
@@ -42,19 +49,26 @@ public class Inventory : MonoBehaviour
         {
             primarySlotOne.SetActive(false);
             currentlyEquippedWeapon = sidearmSlotOne;
-            //currentWeaponAmmo = CurrentWeapon().CurrentAmmo;
+            CurrentWeapon().OnSwapWeapon();
             sidearmSlotOne.SetActive(true);
         }
     }
 
     public void ReloadWeapon()
     {
-        switch (CurrentWeapon().name)
-        {
-            case "ISP":
-                CurrentWeapon().ReloadWeaponAmmoType(PistolAmmo);
-                break;
-        }
+        //switch (CurrentWeapon().name)
+        //{
+        //    case "ISP":
+        //        CurrentWeapon().ReloadWeapon();
+        //        break;
+
+        //    case "Listberg":
+        //        CurrentWeapon().ReloadWeapon();
+        //        break;
+        //}
+
+        CurrentWeapon().ReloadWeapon();
+
     }
 
     public void FireWeapon()

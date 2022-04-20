@@ -12,18 +12,26 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] AudioSource audioSource;
     [SerializeField] ParticleSystem[] muzzleEffect;
+    public Inventory inventory;
     [Tooltip("Order: Fire, Dryfire, Reload, Equip")]
     [SerializeField] AudioClip[] audioClips;
     public GameObject hitEffect;
     public GameObject fireEffect;
     public Transform firingPoint;
     public Sprite weaponSprite;
+    [SerializeField] int ammoType;
 
     public string WeaponName
     {
         get { return weaponName; }
         set { weaponName = value; }
         
+    }
+
+    public int AmmoType
+    {
+        get { return ammoType; }
+        set { ammoType = value; }
     }
 
     public int CurrentAmmo
@@ -56,6 +64,7 @@ public abstract class Weapon : MonoBehaviour
 
         muzzleEffect = GetComponentsInChildren<ParticleSystem>();
         
+        
     }
 
     // Update is called once per frame
@@ -81,14 +90,30 @@ public abstract class Weapon : MonoBehaviour
         audioSource.Play();
     }
 
-    public virtual void ReloadWeaponAmmoType(int ammoType)
+    public virtual void OnSwapWeapon()
     {
-        int remainder = maxCapacity - currentAmmo;
-        if(remainder < ammoType)
+       
+    }
+
+    public virtual void ReloadWeapon()
+    {
+        if (CurrentAmmo != MaxCapacity && AmmoType != 0) 
         {
-            currentAmmo = maxCapacity;
-            
+            Debug.Log("If we see this at max capacity we did something wrong.");
+            int remainder = MaxCapacity - CurrentAmmo;
+
+            if (remainder > AmmoType && AmmoType != 0)
+            {
+                Debug.Log("Can't get a fresh mag");
+                CurrentAmmo += AmmoType;
+                AmmoType = 0;
+                return;
+            }
+
+            AmmoType -= remainder;
+            CurrentAmmo = MaxCapacity;
         }
+
     }
 
     public void SetBulletDamage()

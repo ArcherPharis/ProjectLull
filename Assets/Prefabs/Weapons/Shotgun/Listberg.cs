@@ -8,11 +8,30 @@ public class Listberg : Weapon
     void Start()
     {
         SetBulletDamage();
+        AmmoType = inventory.SHAmmo;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnSwapWeapon()
     {
-        
+        AmmoType = inventory.SHAmmo;
     }
+    public override void StartFiring()
+    {
+        base.StartFiring();
+    }
+
+    public override void OutOfAmmo()
+    {
+        base.OutOfAmmo();
+    }
+    public override void ReloadWeapon()
+    {
+        AmmoType = inventory.SHAmmo;
+        base.ReloadWeapon();
+        inventory.SHAmmo = AmmoType;
+
+    }
+
+
+
 }

@@ -6,6 +6,8 @@ public class BulletProjectile : MonoBehaviour
 {
     private Rigidbody rigidBody;
     [SerializeField] GameObject hitEffect;
+    [Range(0, -5)]
+    [SerializeField] float gravityDrop;
     float speed = 90f;
     public float damage;
     bool collided = false;
@@ -20,6 +22,7 @@ public class BulletProjectile : MonoBehaviour
     {
         
         rigidBody.velocity = transform.forward * speed;
+        Physics.gravity = new Vector3(0, gravityDrop, 0);
         Destroy(gameObject, 1f);
     }
 

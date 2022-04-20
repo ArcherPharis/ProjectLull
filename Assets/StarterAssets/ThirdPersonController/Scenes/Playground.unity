@@ -358,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.43830365
+      value: 0.436967
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -873,6 +873,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
+      propertyPath: ShotGunAmmo
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: primarySlotOne
       value: 
       objectReference: {fileID: 255733774}
@@ -880,6 +884,10 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 60326878}
+    - target: {fileID: 3657376628986144710, guid: 490c2a6921cde664ba9626a318452312, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 630487100}
     - target: {fileID: 3657376628986144710, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: currentAmmo
       value: 10
@@ -936,6 +944,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8134457284204198101, guid: 490c2a6921cde664ba9626a318452312, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 630487100}
     - target: {fileID: 8134457284204198101, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: currentAmmo
       value: 5
@@ -1056,6 +1068,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5564811495800103716, guid: 490c2a6921cde664ba9626a318452312, type: 3}
   m_PrefabInstance: {fileID: 594980119}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &630487100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
+  m_PrefabInstance: {fileID: 594980119}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405de37df019d1446ab75a2ba55596a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &637439349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,7 +2046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.43830365
+      value: 0.436967
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2340,7 +2363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.46408492
+      value: 0.4626696
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.y
