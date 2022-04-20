@@ -16,9 +16,6 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] Image aimingCrosshair;
     [SerializeField] LayerMask aimColliderMask = new LayerMask();
     [SerializeField] Transform whatIsBeingAimedAt;
-    [SerializeField] Transform bulletProjectilePrefab;
-    [SerializeField] Transform hitGreen;
-    [SerializeField] Transform hitRed;
     Animator animator;
     ThirdPersonController thirdPersonController;
     InputComponent playerInput;
@@ -47,9 +44,22 @@ public class ThirdPersonShooterController : MonoBehaviour
         playerInput = GetComponent<InputComponent>();
         animator = GetComponent<Animator>();
         inputActions.Player.Interact.performed += ctx => Interact();
+        inputActions.Player.EquipSidearm.performed += ctx => SwitchWeapon();
+        inputActions.Player.EquipPrimary.performed += ctx => SwitchWeapon();
+        inputActions.Player.Reload.performed += ctx => ReloadWeapon();
         inventory = GetComponent<Inventory>();
-        inventory.SpawnSideSlotOneWeapon();
+        inventory.EquipSidearmSlotOne();
         
+    }
+
+    private void ReloadWeapon()
+    {
+        inventory.ReloadWeapon();
+    }
+
+    private void SwitchWeapon()
+    {
+        inventory.SwitchWeapon();
     }
 
     private void Interact()
@@ -156,7 +166,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         if (playerInput.aim && !playerInput.sprint && Time.time >= fireTime)
         {
-            if (playerInput.shoot && inventory.currentWeaponAmmo >= 1)
+            if (playerInput.shoot && inventory.CurrentWeapon().CurrentAmmo >= 1)
             {
                 if(hitTransform != null)
                 {
@@ -179,13 +189,11 @@ public class ThirdPersonShooterController : MonoBehaviour
                 }
 
                 Vector3 aimDirection = (mouseDirection - inventory.CurrentWeapon().firingPoint.position).normalized;
-                GameObject bullet = Instantiate(inventory.CurrentWeapon().fireEffect, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
-                BulletProjectile bp = bullet.GetComponent<BulletProjectile>();
-                bp.damage = inventory.CurrentWeapon().WeaponDamage;
+                Instantiate(inventory.CurrentWeapon().fireEffect, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
                 playerInput.shoot = false;
                 
             }
-            else if (playerInput.shoot && inventory.currentWeaponAmmo <= 0)
+            else if (playerInput.shoot && inventory.CurrentWeapon().CurrentAmmo <= 0)
             {
                 inventory.WeaponOutOfAmmo();
             }

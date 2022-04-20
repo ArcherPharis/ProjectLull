@@ -24,6 +24,6 @@ public class AmmoCount : MonoBehaviour
         {
             weaponImage.sprite = inventory.CurrentWeapon().weaponSprite;
         }
-        text.text = inventory.currentWeaponAmmo.ToString();
+        text.text = inventory.CurrentWeapon().CurrentAmmo.ToString();
     }
 }

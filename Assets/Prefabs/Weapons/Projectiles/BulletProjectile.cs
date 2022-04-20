@@ -41,6 +41,13 @@ public class BulletProjectile : MonoBehaviour
         {
             collided = true;
 
+            if (collision.gameObject.GetComponent<Damagable>())
+            {
+                Damagable damagable = collision.gameObject.GetComponent<Damagable>();
+                damagable.DealDamage(damage);
+                damagable.Die();
+            }
+
             var impactEffect = Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity) as GameObject;
 
             Destroy(impactEffect, 2f);

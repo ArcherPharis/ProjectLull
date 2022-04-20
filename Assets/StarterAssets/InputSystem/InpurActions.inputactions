@@ -1,5 +1,5 @@
 {
-    "name": "StarterAssets",
+    "name": "InpurActions",
     "maps": [
         {
             "name": "Player",
@@ -63,6 +63,33 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "3b05eca5-e04c-460b-9aef-7b88c28d3b74",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquipSidearm",
+                    "type": "Button",
+                    "id": "f5b791b4-d460-4328-96e5-5ee56c8f3614",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquipPrimary",
+                    "type": "Button",
+                    "id": "694c52f7-7004-47d6-90da-b30d794f43f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "af8914b7-441d-4a3b-86b4-420bb508eaa9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -298,6 +325,39 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "855e8cf8-041d-42cb-9e4f-b55d6e452a15",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipSidearm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dba6728-6b77-4252-86e2-092d719c13eb",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipPrimary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e8fe0f8-2a15-4ed9-931d-21b98724560a",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

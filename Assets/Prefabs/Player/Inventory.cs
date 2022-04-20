@@ -7,10 +7,11 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject sidearmSlotOne;
+    [SerializeField] GameObject primarySlotOne;
     [SerializeField] GameObject currentlyEquippedWeapon;
-    public int currentWeaponAmmo;
+    //public int currentWeaponAmmo;
     [SerializeField] List<Item> inventory = new List<Item>();
-    [SerializeField] int PistolAmmo = 0;
+    [SerializeField] int PistolAmmo;
     [SerializeField] Transform weaponSlot;
     public bool nearItem = false;
     public Interactable quededItem;
@@ -28,7 +29,32 @@ public class Inventory : MonoBehaviour
 
     public void SwitchWeapon()
     {
-        currentlyEquippedWeapon = sidearmSlotOne;
+
+        if(currentlyEquippedWeapon == sidearmSlotOne)
+        {
+            sidearmSlotOne.SetActive(false);
+            currentlyEquippedWeapon = primarySlotOne;
+            //currentWeaponAmmo = CurrentWeapon().CurrentAmmo;
+            primarySlotOne.SetActive(true);
+        }
+
+        else if (currentlyEquippedWeapon == primarySlotOne)
+        {
+            primarySlotOne.SetActive(false);
+            currentlyEquippedWeapon = sidearmSlotOne;
+            //currentWeaponAmmo = CurrentWeapon().CurrentAmmo;
+            sidearmSlotOne.SetActive(true);
+        }
+    }
+
+    public void ReloadWeapon()
+    {
+        switch (CurrentWeapon().name)
+        {
+            case "ISP":
+                CurrentWeapon().ReloadWeaponAmmoType(PistolAmmo);
+                break;
+        }
     }
 
     public void FireWeapon()
@@ -43,7 +69,7 @@ public class Inventory : MonoBehaviour
 
 
 
-    public void SpawnSideSlotOneWeapon() //this method is not needed, instead we will do "on change"
+    public void EquipSidearmSlotOne() //this method is not needed, instead we will do "on change"
     {
         if(sidearmSlotOne.GetComponent<Weapon>() == null)
         {
@@ -51,12 +77,10 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        SwitchWeapon();
-        
+        currentlyEquippedWeapon = sidearmSlotOne;
+        //currentWeaponAmmo = CurrentWeapon().CurrentAmmo;
         sidearmSlotOne.SetActive(true);
 
-        Weapon weapon = currentlyEquippedWeapon.GetComponent<Weapon>();
-        currentWeaponAmmo = weapon.MaxCapacity;
     }
 
     //fire method will get weapon data and give it to the shooter component to deal the amount of damage;
@@ -73,8 +97,9 @@ public class Inventory : MonoBehaviour
 
     public void ReduceCurrentAmmoAmount()
     {
-        currentWeaponAmmo = Mathf.Clamp(currentWeaponAmmo, 0, CurrentWeapon().MaxCapacity);
-        currentWeaponAmmo--;
+        //currentWeaponAmmo = Mathf.Clamp(currentWeaponAmmo, 0, CurrentWeapon().MaxCapacity);
+        //currentWeaponAmmo--;
+        CurrentWeapon().CurrentAmmo--;
     }
 
 

@@ -7,6 +7,7 @@ public abstract class Weapon : MonoBehaviour
 {
     [SerializeField] string weaponName;
     [SerializeField] float weaponDamage;
+    [SerializeField] int currentAmmo;
     [SerializeField] int maxCapacity;
     [SerializeField] float fireRate;
     [SerializeField] AudioSource audioSource;
@@ -23,6 +24,12 @@ public abstract class Weapon : MonoBehaviour
         get { return weaponName; }
         set { weaponName = value; }
         
+    }
+
+    public int CurrentAmmo
+    {
+        get { return currentAmmo; }
+        set { currentAmmo = Mathf.Clamp(value, 0, MaxCapacity); }
     }
 
     public float WeaponDamage
@@ -49,7 +56,6 @@ public abstract class Weapon : MonoBehaviour
 
         muzzleEffect = GetComponentsInChildren<ParticleSystem>();
         
-        
     }
 
     // Update is called once per frame
@@ -69,10 +75,31 @@ public abstract class Weapon : MonoBehaviour
         }
         
     }
-
     public virtual void OutOfAmmo()
     {
         audioSource.clip = audioClips[1];
         audioSource.Play();
+    }
+
+    public virtual void ReloadWeaponAmmoType(int ammoType)
+    {
+        int remainder = maxCapacity - currentAmmo;
+        if(remainder < ammoType)
+        {
+            currentAmmo = maxCapacity;
+            
+        }
+    }
+
+    public void SetBulletDamage()
+    {
+        BulletProjectile[] bp = fireEffect.GetComponentsInChildren<BulletProjectile>();
+        foreach(BulletProjectile bulletProj in bp)
+        {
+            bulletProj.damage = weaponDamage;
+        }
+
+
+        //bp.damage = weaponDamage;
     }
 }

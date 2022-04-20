@@ -20,9 +20,7 @@ public class Enemy : Damagable
     {
         if (collision.gameObject.tag == "PlayerBullet")
         {
-            BulletProjectile bp = collision.gameObject.GetComponent<BulletProjectile>();
-            DealDamage(bp.damage);
-            Die();
+            Debug.Log(collision.gameObject.name + " hit me.");
         }
     }
 
