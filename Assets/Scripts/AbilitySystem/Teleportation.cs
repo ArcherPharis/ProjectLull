@@ -9,10 +9,10 @@ using UnityEngine.VFX;
 
 public delegate bool TeleportationInUse();
 
-[CreateAssetMenu(menuName = "Abilities/Teleportation")]
+[CreateAssetMenu(menuName = "Abilities/Teleportation")] //use the greenball's height to put the radius sphere at.
 public class Teleportation : AbilityBase
 {
-    [SerializeField] GameObject teleportationCam;
+    GameObject teleportationCam;
     [SerializeField] LayerMask aimColliderMask;
     [SerializeField] GameObject vfx;
     GameObject debugSphere;
@@ -43,7 +43,7 @@ public class Teleportation : AbilityBase
     public override void UnapplySkillEffect()
     {
         
-        player.playerInstance.StartCoroutine(Teleport());
+        player.StartCoroutine(Teleport());
 
     }
 
@@ -103,7 +103,6 @@ public class Teleportation : AbilityBase
             hitTransform = raycastHit.transform;
             debugSphere.transform.position = raycastHit.point;
             mousePosition = raycastHit.point;
-            Debug.Log("Ray is active, we're looking at: " + hitTransform.name);
             Vector3 aimTarget = mousePosition;
             aimTarget.y = player.transform.position.y;
             Vector3 aimdDirection = (aimTarget - player.transform.position).normalized;
@@ -142,7 +141,7 @@ public class Teleportation : AbilityBase
         {
             if (hitTransform.GetComponent<Teleportable>())
             {//clean this up lol
-                Globals.teleportationInUse = false;
+                Globals.teleportationInUse =false;
                 tpc = player.gameObject.GetComponent<ThirdPersonController>();
                 tpc.isDisabled = true;
                 Vector3 fasd = new Vector3(0, 0.2f, 0);

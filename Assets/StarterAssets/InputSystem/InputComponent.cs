@@ -91,7 +91,7 @@ using UnityEngine.InputSystem;
 			sprint = newSprintState;
 		}
 
-#if !UNITY_IOS || !UNITY_ANDROID
+
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
@@ -103,7 +103,7 @@ using UnityEngine.InputSystem;
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 
-#endif
 
-	}
-	
+
+}
+

@@ -107,12 +107,10 @@ public abstract class Weapon : MonoBehaviour
     {
         if (CurrentAmmo != MaxCapacity && AmmoType != 0) 
         {
-            Debug.Log("If we see this at max capacity we did something wrong.");
             int remainder = MaxCapacity - CurrentAmmo;
 
             if (remainder > AmmoType && AmmoType != 0)
             {
-                Debug.Log("Can't get a fresh mag");
                 CurrentAmmo += AmmoType;
                 AmmoType = 0;
                 return;

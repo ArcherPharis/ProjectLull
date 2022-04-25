@@ -65,7 +65,6 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         //inputActions.Player.Aim.Disable(); //in the future, make all the input work here, so we can just use this instead of global variables
         player.UseToggledAbility();        
-        Debug.Log("Pressed ability, hopefully we also saw the base effect happen");
     }
 
     private void ReloadWeapon()

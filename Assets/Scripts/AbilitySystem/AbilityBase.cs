@@ -5,7 +5,9 @@ using UnityEngine;
 public class AbilityBase : ScriptableObject
 {
     [SerializeField] Sprite skillIcon;
+    public float coolDown;
     public int ID;
+
 
     public Sprite GetSkillIcon()
     {
