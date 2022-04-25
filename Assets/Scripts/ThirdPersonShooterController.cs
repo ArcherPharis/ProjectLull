@@ -75,6 +75,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private void SwitchWeapon()
     {
+        animator.SetLayerWeight(inventory.CurrentWeapon().AnimationID, 0);
         inventory.SwitchWeapon();
     }
 
@@ -163,7 +164,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             aimRigWeight = 1f;
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            animator.SetLayerWeight(inventory.CurrentWeapon().AnimationID, Mathf.Lerp(animator.GetLayerWeight(inventory.CurrentWeapon().AnimationID), 1f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = true;
             RayCastCenter();
         }
@@ -173,7 +174,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(lookSensitivity);
             aimRigWeight = 0f;
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            animator.SetLayerWeight(inventory.CurrentWeapon().AnimationID, Mathf.Lerp(animator.GetLayerWeight(inventory.CurrentWeapon().AnimationID), 0f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = false;
             
         }

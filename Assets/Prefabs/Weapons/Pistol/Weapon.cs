@@ -20,6 +20,7 @@ public abstract class Weapon : MonoBehaviour
     public GameObject fireEffect;
     public Transform firingPoint;
     public Sprite weaponSprite;
+    public int AnimationID;
     [SerializeField] int ammoType;
 
     public string WeaponName

@@ -18,4 +18,5 @@ MonoBehaviour:
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 55
+  vfx: {fileID: 4725586849654234643, guid: 136cb0977ab6bb24899976936c75f855, type: 3}
   teleportationRadius: 12

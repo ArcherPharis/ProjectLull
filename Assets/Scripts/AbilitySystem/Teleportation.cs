@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Cinemachine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using UnityEngine.VFX;
 
 public delegate bool TeleportationInUse();
 
@@ -13,6 +14,7 @@ public class Teleportation : AbilityBase
 {
     [SerializeField] GameObject teleportationCam;
     [SerializeField] LayerMask aimColliderMask;
+    [SerializeField] GameObject vfx;
     GameObject debugSphere;
     ThirdPersonController tpc;
     Transform hitTransform = null;
@@ -42,6 +44,7 @@ public class Teleportation : AbilityBase
     {
         
         player.playerInstance.StartCoroutine(Teleport());
+
     }
 
     public override void UpdatableEffects()
@@ -138,15 +141,29 @@ public class Teleportation : AbilityBase
         if (hitTransform != null)
         {
             if (hitTransform.GetComponent<Teleportable>())
-            {
+            {//clean this up lol
                 Globals.teleportationInUse = false;
                 tpc = player.gameObject.GetComponent<ThirdPersonController>();
                 tpc.isDisabled = true;
-                yield return new WaitForSeconds(0.1f);
+                Vector3 fasd = new Vector3(0, 0.2f, 0);
+                GameObject spawnedVFX = Instantiate(vfx, player.transform.position + fasd, player.transform.rotation);
+                VisualEffect efx = spawnedVFX.GetComponent<VisualEffect>();
+                efx.Play();
+                yield return new WaitForSeconds(0.3f);
                 player.transform.position = mousePosition;
+                efx.Stop();
+                Destroy(spawnedVFX, 5f);
                 yield return new WaitForSeconds(0.1f);
                 tpc.isDisabled = false;
+                yield return new WaitForSeconds(0.2f);
+                GameObject spawnedVFX2 = Instantiate(vfx, player.transform.position + fasd, player.transform.rotation);
+                VisualEffect efx2 = spawnedVFX2.GetComponent<VisualEffect>();
+                efx2.Play();
                 ResetTeleportationCamera();
+                yield return new WaitForSeconds(0.3f);
+                efx2.Stop();
+                Destroy(spawnedVFX2, 5f);
+
             }
 
             else
