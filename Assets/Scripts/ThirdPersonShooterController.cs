@@ -16,6 +16,8 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] Image aimingCrosshair;
     [SerializeField] LayerMask aimColliderMask = new LayerMask();
     [SerializeField] Transform whatIsBeingAimedAt;
+    [SerializeField] Player player;
+    public bool abilityInUse;
     Animator animator;
     ThirdPersonController thirdPersonController;
     InputComponent playerInput;
@@ -44,12 +46,26 @@ public class ThirdPersonShooterController : MonoBehaviour
         playerInput = GetComponent<InputComponent>();
         animator = GetComponent<Animator>();
         inputActions.Player.Interact.performed += ctx => Interact();
+        inputActions.Player.UseAbility.started += ctx => UseAbility();
+        inputActions.Player.UseAbility.canceled += ctx => AbilityCancel();
         inputActions.Player.EquipSidearm.performed += ctx => SwitchWeapon();
         inputActions.Player.EquipPrimary.performed += ctx => SwitchWeapon();
         inputActions.Player.Reload.performed += ctx => ReloadWeapon();
         inventory = GetComponent<Inventory>();
         inventory.EquipSidearmSlotOne();
         
+    }
+
+    private void AbilityCancel()
+    {
+        player.StopUsingToggledAbility();
+    }
+
+    void UseAbility()
+    {
+        //inputActions.Player.Aim.Disable(); //in the future, make all the input work here, so we can just use this instead of global variables
+        player.UseToggledAbility();        
+        Debug.Log("Pressed ability, hopefully we also saw the base effect happen");
     }
 
     private void ReloadWeapon()
@@ -96,7 +112,10 @@ public class ThirdPersonShooterController : MonoBehaviour
         PlayerAim();
         PlayerShoot(mousePosition);
         aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
-
+        if (inputActions.Player.UseAbility.IsPressed())
+        {
+            player.UseUpdatableSkillEffect();
+        }
 
     }
 
@@ -135,12 +154,10 @@ public class ThirdPersonShooterController : MonoBehaviour
         }
     }
 
-
-
     void PlayerAim()
     {
 
-        if (playerInput.aim && !playerInput.sprint)
+        if (playerInput.aim && !playerInput.sprint && !Globals.teleportationInUse)
         {
             thirdPersonController.SetPlayerRotateAim(false);
             aimVirtualCamera.gameObject.SetActive(true);
@@ -164,7 +181,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     void PlayerShoot(Vector3 mouseDirection)
     {
-        if (playerInput.aim && !playerInput.sprint && Time.time >= fireTime)
+        if (playerInput.aim && !playerInput.sprint && Time.time >= fireTime && !Globals.teleportationInUse)
         {
             if (playerInput.shoot && inventory.CurrentWeapon().CurrentAmmo >= 1)
             {
@@ -176,28 +193,22 @@ public class ThirdPersonShooterController : MonoBehaviour
                         inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
                         fireTime = Time.time + 1f / inventory.CurrentWeapon().FireRate;
-   
-
                     }
                     else
                     {
                         inventory.FireWeapon();
                         inventory.ReduceCurrentAmmoAmount();
                         fireTime = Time.time + 1f / inventory.CurrentWeapon().FireRate;
-
                     }
                 }
-
                 Vector3 aimDirection = (mouseDirection - inventory.CurrentWeapon().firingPoint.position).normalized;
                 Instantiate(inventory.CurrentWeapon().fireEffect, inventory.CurrentWeapon().firingPoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
-                playerInput.shoot = false;
-                
+                playerInput.shoot = false;            
             }
             else if (playerInput.shoot && inventory.CurrentWeapon().CurrentAmmo <= 0)
             {
                 inventory.WeaponOutOfAmmo();
             }
-     
         }
             playerInput.shoot = false;//prevents bool from being set to true when not aiming.
             

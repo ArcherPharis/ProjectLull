@@ -56,16 +56,6 @@ public class Inventory : MonoBehaviour
 
     public void ReloadWeapon()
     {
-        //switch (CurrentWeapon().name)
-        //{
-        //    case "ISP":
-        //        CurrentWeapon().ReloadWeapon();
-        //        break;
-
-        //    case "Listberg":
-        //        CurrentWeapon().ReloadWeapon();
-        //        break;
-        //}
 
         CurrentWeapon().ReloadWeapon();
 

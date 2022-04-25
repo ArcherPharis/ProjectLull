@@ -9925,5 +9925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 1801918589960200, guid: 31e08f66ceeac5545b743dd22aeb09ec, type: 3}
-  gravityDrop: -2.5
+  gravityDrop: -1.8
   damage: 14
+  localAccuracy: 90

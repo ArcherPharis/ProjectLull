@@ -1439,6 +1439,7 @@ GameObject:
   - component: {fileID: 5076117801486039442}
   - component: {fileID: 8880514488793526409}
   - component: {fileID: 630487088}
+  - component: {fileID: 5590198752997919441}
   - component: {fileID: 1626663324}
   m_Layer: 8
   m_Name: Player
@@ -1706,13 +1707,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sidearmSlotOne: {fileID: 3922272031666287515}
+  primarySlotOne: {fileID: 6531304722127645425}
   currentlyEquippedWeapon: {fileID: 0}
-  currentWeaponAmmo: 0
   inventory: []
-  PistolAmmo: 0
+  PistolAmmo: 30
+  ShotGunAmmo: 12
   weaponSlot: {fileID: 1524839309378064974}
   nearItem: 0
   quededItem: {fileID: 0}
+--- !u!114 &5590198752997919441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5076117801486039454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3444ebe0c85cd740ba8363a672fe91c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1626663324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,6 +2934,14 @@ PrefabInstance:
       propertyPath: fireRate
       value: 3.3
       objectReference: {fileID: 0}
+    - target: {fileID: -5565995406999782994, guid: b7e791d7b8a65744dac0930c69375377, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 630487088}
+    - target: {fileID: -5565995406999782994, guid: b7e791d7b8a65744dac0930c69375377, type: 3}
+      propertyPath: currentAmmo
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3922272032794979827, guid: b7e791d7b8a65744dac0930c69375377, type: 3}
       propertyPath: m_Name
       value: ISP
@@ -3048,10 +3070,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4859243030402321615, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579488961274830571, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+      propertyPath: fireRate
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579488961274830571, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 630487088}
+    - target: {fileID: 7579488961274830571, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+      propertyPath: currentAmmo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579488961274830571, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+      propertyPath: weaponAccuracy
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+--- !u!1 &6531304722127645425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4859243030402321615, guid: 6289e2fc53e54764a912566ea9333ded, type: 3}
+  m_PrefabInstance: {fileID: 1859041891447973438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5953973501449387892
 PrefabInstance:
   m_ObjectHideFlags: 0

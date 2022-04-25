@@ -11,6 +11,10 @@ public class BulletProjectile : MonoBehaviour
     float speed = 90f;
     public float damage;
     bool collided = false;
+    Vector3 offset;
+    public float localAccuracy;
+
+
 
     private void Awake()
     {
@@ -20,8 +24,23 @@ public class BulletProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        rigidBody.velocity = transform.forward * speed;
+
+        if (localAccuracy != 100)
+        {
+            Debug.Log("accuracy is not 100");
+            localAccuracy = (1f - (localAccuracy / 100)) * 3f;//equation works for now, improve in future for better variance
+            Vector3 newDir = Quaternion.Euler(Random.Range(-localAccuracy, localAccuracy), Random.Range(-localAccuracy, localAccuracy), 0) * transform.forward;
+            rigidBody.velocity = newDir * speed;
+
+        }
+        else
+        {
+            Debug.Log("Accuracy is 100");
+            Vector3 newDir = Quaternion.Euler(0, 0, 0) * transform.forward;
+            rigidBody.velocity = newDir * speed;
+        }
+
+
         Physics.gravity = new Vector3(0, gravityDrop, 0);
         Destroy(gameObject, 1f);
     }
@@ -29,13 +48,26 @@ public class BulletProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         
     }
+
+    private void FixedUpdate()
+    {
+
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         
         Destroy(gameObject);
+    }
+
+    public void SetBulletAccuracy(float accuracy)
+    {
+        localAccuracy = accuracy;
     }
 
     private void OnCollisionEnter(Collision collision)

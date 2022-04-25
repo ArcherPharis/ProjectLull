@@ -10,6 +10,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] int currentAmmo;
     [SerializeField] int maxCapacity;
     [SerializeField] float fireRate;
+    [SerializeField] float weaponAccuracy;
     [SerializeField] AudioSource audioSource;
     [SerializeField] ParticleSystem[] muzzleEffect;
     public Inventory inventory;
@@ -38,6 +39,12 @@ public abstract class Weapon : MonoBehaviour
     {
         get { return currentAmmo; }
         set { currentAmmo = Mathf.Clamp(value, 0, MaxCapacity); }
+    }
+
+    public float WeaponAccuracy
+    {
+        get { return weaponAccuracy; }
+        set { weaponAccuracy = value; }
     }
 
     public float WeaponDamage
@@ -116,12 +123,15 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
+
+
     public void SetBulletDamage()
     {
         BulletProjectile[] bp = fireEffect.GetComponentsInChildren<BulletProjectile>();
         foreach(BulletProjectile bulletProj in bp)
         {
             bulletProj.damage = weaponDamage;
+            bulletProj.SetBulletAccuracy(weaponAccuracy);
         }
 
 

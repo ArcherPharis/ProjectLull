@@ -81,10 +81,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: ISP
   weaponDamage: 14
+  currentAmmo: 0
   maxCapacity: 10
   fireRate: 1
+  weaponAccuracy: 90
   audioSource: {fileID: 6249943136398702197}
   muzzleEffect: []
+  inventory: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: fdeb1900d4225c444bfed1895a64044e, type: 3}
   - {fileID: 8300000, guid: 261eaf9a312b67d4aa8705bc4c6b1891, type: 3}
@@ -92,6 +95,7 @@ MonoBehaviour:
   fireEffect: {fileID: 1830508508936448, guid: dd908d668ebd6824dbeefc14bfbae555, type: 3}
   firingPoint: {fileID: 5157972590333632748}
   weaponSprite: {fileID: 21300000, guid: abb804d1e34b4454e89ddc2823566c63, type: 3}
+  ammoType: 0
 --- !u!82 &6249943136398702197
 AudioSource:
   m_ObjectHideFlags: 0
