@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8980239105008627608}
   - component: {fileID: 8281162886613873798}
   - component: {fileID: 4709459525728532714}
+  - component: {fileID: 2960675381329891716}
   m_Layer: 0
   m_Name: WandererGhoul
   m_TagString: Untagged
@@ -97,7 +98,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4544743424851611157}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.31
   m_Height: 1.69
   m_Direction: 1
@@ -111,11 +112,31 @@ MeshCollider:
   m_GameObject: {fileID: 4544743424851611157}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8354703861718019206, guid: a95b3859eff82094598ec7da2cab21ff, type: 3}
+--- !u!95 &2960675381329891716
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4544743424851611157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a95b3859eff82094598ec7da2cab21ff, type: 3}
+  m_Controller: {fileID: 9100000, guid: f9d40b6ccf062bc488ed2a3410dfc68c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1478760681051543127
 PrefabInstance:
   m_ObjectHideFlags: 0

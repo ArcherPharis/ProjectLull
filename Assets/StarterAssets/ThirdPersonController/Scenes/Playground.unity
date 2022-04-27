@@ -257,6 +257,9 @@ MonoBehaviour:
   health: 124
   player: {fileID: 0}
   meleeDamageAmount: 0
+  animator: {fileID: 0}
+  speed: 0
+  rotateSpeed: 0
 --- !u!136 &234885506
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1163,6 +1166,9 @@ MonoBehaviour:
   health: 100
   player: {fileID: 0}
   meleeDamageAmount: 0
+  animator: {fileID: 0}
+  speed: 0
+  rotateSpeed: 0
 --- !u!136 &637439351
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2264,6 +2270,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36742ce9a555da40a5f78a17c7139ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1460775167 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2960675381329891716, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
+  m_PrefabInstance: {fileID: 1687496236}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1465315842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
@@ -2708,6 +2719,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2107151848}
+    - target: {fileID: 1238280372329389033, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1460775167}
     - target: {fileID: 1238280372329389033, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: meleeDamageAmount
       value: 30

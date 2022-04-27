@@ -11,8 +11,8 @@ public class GhoulFSM : FSM
     }
 
     public ActionState currentState;
-    [SerializeField] float speed;
-    [SerializeField] float rotateSpeed;
+    //[SerializeField] float speed;
+    //[SerializeField] float rotateSpeed;
     [SerializeField] Enemy enemy;
     [SerializeField] float detectionRadius;
     bool isDead;
@@ -64,8 +64,8 @@ public class GhoulFSM : FSM
 
     void SetSpeedParams(float newSpeed, float newRotateSpeed)
     {
-        speed = Mathf.Lerp(speed, newSpeed, Time.deltaTime * 20f);
-        rotateSpeed = Mathf.Lerp(rotateSpeed, newRotateSpeed, Time.deltaTime * 5f);
+        enemy.speed = Mathf.Lerp(enemy.speed, newSpeed, Time.deltaTime * 20f);
+        enemy.rotateSpeed = Mathf.Lerp(enemy.rotateSpeed, newRotateSpeed, Time.deltaTime * 5f);
     }
     private void UpdateDeadState()
     {
@@ -84,9 +84,9 @@ public class GhoulFSM : FSM
         if(distance >= 0.1f && distance < detectionRadius + 15)
         {
             Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
 
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
 
             if(distance >= 0.1f && distance < 2f)
             {
@@ -115,8 +115,8 @@ public class GhoulFSM : FSM
         //change the current Destination to the 
         destinationPosition = playerTransform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-        if(distanceToPlayer <= 1f)
+        
+        if (distanceToPlayer <= 1f)
         {
             Debug.Log("Time to attack!");
             currentState = ActionState.Attack;
@@ -126,8 +126,10 @@ public class GhoulFSM : FSM
             currentState = ActionState.Patrol;
         }
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
+        transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        enemy.ChangeMovementSpeed(1f, 0.3f);
+
     }
 
     private void UpdatePatrolState()
@@ -145,11 +147,12 @@ public class GhoulFSM : FSM
 
         //rotates enemy towards their target
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
 
         //move forward
         //controller.Move(Vector3.forward * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        enemy.ChangeMovementSpeed(0f, 0.3f);
     }
 
     private void FindNextPoint()
