@@ -27,7 +27,6 @@ public class BulletProjectile : MonoBehaviour
 
         if (localAccuracy != 100)
         {
-            Debug.Log("accuracy is not 100");
             localAccuracy = (1f - (localAccuracy / 100)) * 3f;//equation works for now, improve in future for better variance
             Vector3 newDir = Quaternion.Euler(Random.Range(-localAccuracy, localAccuracy), Random.Range(-localAccuracy, localAccuracy), 0) * transform.forward;
             rigidBody.velocity = newDir * speed;
@@ -35,7 +34,6 @@ public class BulletProjectile : MonoBehaviour
         }
         else
         {
-            Debug.Log("Accuracy is 100");
             Vector3 newDir = Quaternion.Euler(0, 0, 0) * transform.forward;
             rigidBody.velocity = newDir * speed;
         }

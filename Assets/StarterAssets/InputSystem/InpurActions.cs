@@ -125,6 +125,15 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveItem"",
+                    ""type"": ""Value"",
+                    ""id"": ""b7ad05b3-e3f9-4a25-9320-957449cf1a35"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -402,6 +411,61 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                     ""action"": ""UseAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""e151fa62-8efd-45ed-8ec0-b4d198e88d4c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveItem"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0680634e-cad5-4774-912b-bbcd93fac313"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3f5ca6e9-d343-42f9-af9c-ae2e04f7aa95"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""27f17c6d-8dec-4c52-ac6b-7db36a5bbdd5"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""a0aeb29d-6ef6-4309-a9df-a5364393273d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -469,6 +533,7 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         m_Player_EquipPrimary = m_Player.FindAction("EquipPrimary", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_UseAbility = m_Player.FindAction("UseAbility", throwIfNotFound: true);
+        m_Player_MoveItem = m_Player.FindAction("MoveItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -539,6 +604,7 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_EquipPrimary;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_UseAbility;
+    private readonly InputAction m_Player_MoveItem;
     public struct PlayerActions
     {
         private @InpurActions m_Wrapper;
@@ -554,6 +620,7 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         public InputAction @EquipPrimary => m_Wrapper.m_Player_EquipPrimary;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @UseAbility => m_Wrapper.m_Player_UseAbility;
+        public InputAction @MoveItem => m_Wrapper.m_Player_MoveItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -596,6 +663,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                 @UseAbility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseAbility;
                 @UseAbility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseAbility;
                 @UseAbility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseAbility;
+                @MoveItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
+                @MoveItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
+                @MoveItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -633,6 +703,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                 @UseAbility.started += instance.OnUseAbility;
                 @UseAbility.performed += instance.OnUseAbility;
                 @UseAbility.canceled += instance.OnUseAbility;
+                @MoveItem.started += instance.OnMoveItem;
+                @MoveItem.performed += instance.OnMoveItem;
+                @MoveItem.canceled += instance.OnMoveItem;
             }
         }
     }
@@ -686,5 +759,6 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         void OnEquipPrimary(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnUseAbility(InputAction.CallbackContext context);
+        void OnMoveItem(InputAction.CallbackContext context);
     }
 }

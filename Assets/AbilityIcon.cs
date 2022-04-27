@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class AbilityIcon : MonoBehaviour
 {
     [SerializeField] Image image;
-    [SerializeField] GameObject coolDownImage;
+    [SerializeField] Image coolDownImage;
     [SerializeField] Player player;
-    RectTransform rect;
 
     // Start is called before the first frame update
     void Start()
     {
-        rect = coolDownImage.GetComponent<RectTransform>();
+    
     }
 
     // Update is called once per frame
@@ -21,6 +20,7 @@ public class AbilityIcon : MonoBehaviour
     {
         UpdateAbilityIcon();
         CoolDownScale();
+
     }
 
     void UpdateAbilityIcon()
@@ -32,9 +32,10 @@ public class AbilityIcon : MonoBehaviour
     {
         if(player.elapsedTime < player.CurrentlyEquippedAbility().coolDown)
         {
-            Vector2 rector2 = rect.sizeDelta;
-            rector2.y = 0;
-            //rector2.y =  Mathf.Lerp(0, 100, player.CurrentlyEquippedAbility().coolDown);
+            coolDownImage.fillAmount += 1 / player.CurrentlyEquippedAbility().coolDown * Time.deltaTime;
+            
         }
     }
+
+
 }

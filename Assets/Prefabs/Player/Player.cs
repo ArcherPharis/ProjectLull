@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Damagable
 {
     public List<AbilityBase> abilities;
     [SerializeField] AbilityBase currentEquippedAbility;
     public float elapsedTime;
     bool canUseAbility = false;
+    GameObject storeObject = null;
 
 
 
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     {
         currentEquippedAbility = abilities[0];
         elapsedTime = currentEquippedAbility.coolDown;
+        AbilityInit();
         
     }
     public AbilityBase CurrentlyEquippedAbility()
@@ -58,6 +60,29 @@ public class Player : MonoBehaviour
         {
             currentEquippedAbility.UpdatableEffects();
         }
+    }
+
+    public void AbilityInit()
+    {
+        currentEquippedAbility.Init();
+    }
+
+    public GameObject FindCloestStorableItem()
+    {
+        GameObject[] storableItems = GameObject.FindGameObjectsWithTag("Storable");
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach(GameObject storables in storableItems)
+        {
+            Vector3 difference = storables.transform.position - position;
+            float currentDistance = difference.sqrMagnitude;
+            if(currentDistance < distance)
+            {
+                storeObject = storables;
+                distance = currentDistance;
+            }
+        }
+        return storeObject;
     }
 
 

@@ -9,7 +9,7 @@ using UnityEngine.VFX;
 
 public delegate bool TeleportationInUse();
 
-[CreateAssetMenu(menuName = "Abilities/Teleportation")] //use the greenball's height to put the radius sphere at.
+//[CreateAssetMenu(menuName = "Abilities/Teleportation")] //use the greenball's height to put the radius sphere at.
 public class Teleportation : AbilityBase
 {
     GameObject teleportationCam;

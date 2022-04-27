@@ -131,7 +131,6 @@ using UnityEngine.InputSystem;
 
 		private void LateUpdate()
 		{
-			//CameraRotation();
 		}
 
 		private void AssignAnimationIDs()
@@ -156,23 +155,6 @@ using UnityEngine.InputSystem;
 			}
 		}
 
-		private void CameraRotation()
-		{
-        // if there is an input and camera position is not fixed
-        if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
-        {
-            _cinemachineTargetYaw += _input.look.x * Time.deltaTime * Sensitivity;
-            _cinemachineTargetPitch += _input.look.y * Time.deltaTime * Sensitivity;
-
-        }
-
-        // clamp our rotations so our values are limited 360 degrees
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-        // Cinemachine will follow this target
-        CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
-    }
 
 	private void Move()
 		{

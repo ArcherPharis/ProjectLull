@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : Damagable
 {
     Inventory damageTakenFromPlayerBullet;
+    [SerializeField] Player player;
+    [SerializeField] float meleeDamageAmount;
     private void Awake()
     {
         damageTakenFromPlayerBullet = GameObject.Find("Player").GetComponent<Inventory>();//this won't work because the
@@ -14,6 +16,10 @@ public class Enemy : Damagable
     {
         base.Die();
         Debug.Log("hello, I'm from the derived class, ready to do more specific tasks");
+    }
+    public void Attack()
+    {
+        player.DealDamage(meleeDamageAmount);
     }
 
     private void OnCollisionEnter(Collision collision)
