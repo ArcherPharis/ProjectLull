@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e8961a24dd767e448b64f1a42413de73
+guid: a88d4801d5a6e0140ad99c42c8dfff53
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: wanderer_walk
+    second: Player_Death
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,21 +36,21 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: wanderer_walk
+      name: Player_Death
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 130
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 0

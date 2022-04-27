@@ -19,11 +19,10 @@ public class Damagable: MonoBehaviour
 
     public virtual void Die()
     {
-        if(Health <= 0)
-        {
-            Debug.Log("I'M DEAD!!!!!");
-            Destroy(gameObject, 5f);
-        }
+
+        Debug.Log("I'M DEAD!!!!!");
+            
+
     }
 
     

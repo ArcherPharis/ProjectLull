@@ -9,16 +9,28 @@ public class Enemy : Damagable
     [SerializeField] float meleeDamageAmount;
     [SerializeField] Animator animator;
     int animationSpeed;
+    int deathIndex;
     public float speed;
     public float rotateSpeed;
     private void Awake()
     {
         animationSpeed = Animator.StringToHash("Speed");
+        deathIndex = Animator.StringToHash("AnimIndex");
+    }
+
+    private void Update()
+    {
+        
     }
     public override void Die()
     {
-        base.Die();
-        Debug.Log("hello, I'm from the derived class, ready to do more specific tasks");
+        if (Health <= 0)
+        {
+            base.Die();
+            Destroy(gameObject, 5f);
+            animator.SetFloat(deathIndex, Random.Range(0, 2));
+            animator.SetTrigger("Die");
+        }
     }
 
     public void ChangeMovementSpeed(float desiredValue, float dampTime)

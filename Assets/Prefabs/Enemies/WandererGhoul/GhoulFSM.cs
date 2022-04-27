@@ -78,7 +78,8 @@ public class GhoulFSM : FSM
 
     private void UpdateAttackState()
     {
-        destinationPosition = playerTransform.position;
+        Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
+        destinationPosition = playerPos;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
 
         if(distance >= 0.1f && distance < detectionRadius + 15)
@@ -113,7 +114,8 @@ public class GhoulFSM : FSM
     private void UpdateChaseState()
     {
         //change the current Destination to the 
-        destinationPosition = playerTransform.position;
+        Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
+        destinationPosition = playerPos;
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         
         if (distanceToPlayer <= 1f)

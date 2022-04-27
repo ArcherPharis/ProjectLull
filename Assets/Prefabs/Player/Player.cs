@@ -10,7 +10,7 @@ public class Player : Damagable
     public float elapsedTime;
     bool canUseAbility = false;
     GameObject storeObject = null;
-
+    Animator animator;
 
 
     // Start is called before the first frame update
@@ -18,6 +18,7 @@ public class Player : Damagable
     {
         currentEquippedAbility = abilities[0];
         elapsedTime = currentEquippedAbility.coolDown;
+        animator = GetComponent<Animator>();
         AbilityInit();
         
     }
@@ -29,6 +30,17 @@ public class Player : Damagable
     void Update()
     {
         elapsedTime += Time.deltaTime;
+        Die();
+    }
+
+    public override void Die()
+    {
+        if (Health <= 0)
+        {
+            base.Die();
+            animator.SetTrigger("Die");
+
+        }
     }
 
     public void UseToggledAbility()
