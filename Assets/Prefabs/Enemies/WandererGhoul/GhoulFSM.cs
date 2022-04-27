@@ -92,6 +92,7 @@ public class GhoulFSM : FSM
             if(distance >= 0.1f && distance < 2f)
             {
                 Attack();
+                
             }
         }
         else if(distance >= detectionRadius + 15)

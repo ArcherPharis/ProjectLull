@@ -24,13 +24,11 @@ public class Enemy : Damagable
     }
     public override void Die()
     {
-        if (Health <= 0)
-        {
-            base.Die();
-            Destroy(gameObject, 5f);
-            animator.SetFloat(deathIndex, Random.Range(0, 2));
-            animator.SetTrigger("Die");
-        }
+        base.Die();
+        Destroy(gameObject, 5f);
+        animator.SetFloat(deathIndex, Random.Range(0, 2));
+        animator.SetTrigger("Die");
+        
     }
 
     public void ChangeMovementSpeed(float desiredValue, float dampTime)
@@ -42,13 +40,7 @@ public class Enemy : Damagable
         player.DealDamage(meleeDamageAmount);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "PlayerBullet")
-        {
-            Debug.Log(collision.gameObject.name + " hit me.");
-        }
-    }
+
 
 
 }
