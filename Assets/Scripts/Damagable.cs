@@ -22,6 +22,7 @@ public class Damagable: MonoBehaviour
         if(Health <= 0)
         {
             Debug.Log("I'M DEAD!!!!!");
+            Destroy(gameObject, 5f);
         }
     }
 

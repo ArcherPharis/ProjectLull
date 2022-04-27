@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  player: {fileID: 0}
+  meleeDamageAmount: 0
 --- !u!114 &4503070618902778180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58386b43bc69144086ef4f85d7e3a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wayPointList: []
+  currentState: 0
+  speed: 0
+  rotateSpeed: 0
+  enemy: {fileID: 0}
+  detectionRadius: 0
 --- !u!143 &8980239105008627608
 CharacterController:
   m_ObjectHideFlags: 0
@@ -71,7 +79,7 @@ CharacterController:
   m_GameObject: {fileID: 4544743424851611157}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 1.69
   m_Radius: 0.31

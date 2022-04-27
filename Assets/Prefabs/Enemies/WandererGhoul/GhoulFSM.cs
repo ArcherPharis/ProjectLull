@@ -21,6 +21,10 @@ public class GhoulFSM : FSM
     //chase and attack are pretty similar, consider combining the two.
     //or just keep attack and make it harder for the enemy to lose interest in you once they get close enough compared to chase.
 
+    //consider making an idle state in between patrolling states.
+    //also need to add if they get shot at, or I guess just take damage *while* in patrol state, to immediately come after the
+    //player. They'll give up after..let's say 10 seconds and if they never enter the chase state, they will go back to patrol
+
 
     protected override void Initialize()
     {
@@ -28,6 +32,7 @@ public class GhoulFSM : FSM
         isDead = false;
         elapsedTime = 0.0f;
         meleeAttackRate = 3.0f;
+
 
         FindNextPoint();
 
@@ -45,9 +50,9 @@ public class GhoulFSM : FSM
     {
         switch (currentState)
         {
-            case ActionState.Patrol: UpdatePatrolState(); break;
-            case ActionState.Chase: UpdateChaseState(); break;
-            case ActionState.Attack: UpdateAttackState(); break;
+            case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1, 0.5f); break;
+            case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3, 12); break;
+            case ActionState.Attack: UpdateAttackState(); SetSpeedParams(3,12); break;
             case ActionState.Dead: UpdateDeadState(); break;
         }
         elapsedTime += Time.deltaTime;
@@ -57,9 +62,18 @@ public class GhoulFSM : FSM
         }
     }
 
+    void SetSpeedParams(float newSpeed, float newRotateSpeed)
+    {
+        speed = Mathf.Lerp(speed, newSpeed, Time.deltaTime * 20f);
+        rotateSpeed = Mathf.Lerp(rotateSpeed, newRotateSpeed, Time.deltaTime * 5f);
+    }
     private void UpdateDeadState()
     {
-
+        if (!isDead)
+        {
+            isDead = true;
+            enemy.Die();
+        }
     }
 
     private void UpdateAttackState()
