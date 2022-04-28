@@ -8,7 +8,7 @@ public class BulletProjectile : MonoBehaviour
     [SerializeField] GameObject hitEffect;
     [Range(0, -5)]
     [SerializeField] float gravityDrop;
-    float speed = 90f;
+    float speed = 120f;
     public float damage;
     bool collided = false;
     Vector3 offset;

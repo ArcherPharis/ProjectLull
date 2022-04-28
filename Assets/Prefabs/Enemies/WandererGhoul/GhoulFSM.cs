@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GhoulFSM : FSM
 {
     public enum ActionState
     {
-        None, Patrol, Chase, Attack, Dead
+        None, Patrol, Chase, AgressiveChase, Attack, Dead
     }
 
     public ActionState currentState;
@@ -15,6 +16,7 @@ public class GhoulFSM : FSM
     //[SerializeField] float rotateSpeed;
     [SerializeField] Enemy enemy;
     [SerializeField] float detectionRadius;
+    NavMeshAgent agent;
     bool isDead;
     CharacterController controller;
 
@@ -31,7 +33,8 @@ public class GhoulFSM : FSM
         currentState = ActionState.Patrol;
         isDead = false;
         elapsedTime = 0.0f;
-        meleeAttackRate = 3.0f;
+        meleeAttackRate = 2.0f;
+        agent = GetComponent<NavMeshAgent>();
 
 
         FindNextPoint();
@@ -50,9 +53,10 @@ public class GhoulFSM : FSM
     {
         switch (currentState)
         {
-            case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1, 0.5f); break;
-            case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3, 12); break;
-            case ActionState.Attack: UpdateAttackState(); SetSpeedParams(3,12); break;
+            case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1f, 3f); break;
+            case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3f, 12f); break;
+            case ActionState.AgressiveChase: UpdateAggressiveChase(); SetSpeedParams(3.5f,12f); break;
+            case ActionState.Attack: UpdateAttackState(); break;
             case ActionState.Dead: UpdateDeadState(); break;
         }
         elapsedTime += Time.deltaTime;
@@ -62,10 +66,33 @@ public class GhoulFSM : FSM
         }
     }
 
+    private void UpdateAttackState()
+    {
+        //destinationPosition = playerTransform.position;
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (distance >= 0.1f && distance < 1.5f)
+        {
+            agent.isStopped = true;
+            Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+            Attack();
+
+        }
+        else if (elapsedTime >= meleeAttackRate && distance > 1.6f)
+        {
+            agent.isStopped = false;
+            currentState = ActionState.AgressiveChase;
+        }
+        agent.isStopped = false;
+
+
+    }
+
     void SetSpeedParams(float newSpeed, float newRotateSpeed)
     {
-        enemy.speed = Mathf.Lerp(enemy.speed, newSpeed, Time.deltaTime * 20f);
-        enemy.rotateSpeed = Mathf.Lerp(enemy.rotateSpeed, newRotateSpeed, Time.deltaTime * 5f);
+        agent.speed = Mathf.Lerp(agent.speed, newSpeed, Time.deltaTime * 20f);
+        agent.angularSpeed = Mathf.Lerp(agent.angularSpeed, newRotateSpeed, Time.deltaTime * 5f);
     }
     private void UpdateDeadState()
     {
@@ -76,30 +103,31 @@ public class GhoulFSM : FSM
         }
     }
 
-    private void UpdateAttackState()
+    private void UpdateAggressiveChase()
     {
-        Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-        destinationPosition = playerPos;
+        //Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z); //prevents enemy from "jumping" with player. (old system)
+        destinationPosition = playerTransform.position;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-        if(distance >= 0.1f && distance < detectionRadius + 15)
+        if(distance >= 0.8f && distance < detectionRadius + 15)
         {
             Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
 
-            transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+            
+            //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        }
 
-            if(distance >= 0.1f && distance < 2f)
-            {
-                Attack();
-                
-            }
+        else if(distance < 1.5f)
+        {
+            currentState = ActionState.Attack;
         }
         else if(distance >= detectionRadius + 15)
         {
             currentState = ActionState.Patrol;
         }
-        
+        agent.destination = destinationPosition;
+
     }
 
     private void Attack()
@@ -115,22 +143,23 @@ public class GhoulFSM : FSM
     private void UpdateChaseState()
     {
         //change the current Destination to the 
-        Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-        destinationPosition = playerPos;
+        destinationPosition = playerTransform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         
-        if (distanceToPlayer <= 1f)
+        if (distanceToPlayer <= 2f)
         {
-            Debug.Log("Time to attack!");
-            currentState = ActionState.Attack;
+            
+            currentState = ActionState.AgressiveChase;
         }
         else if(distanceToPlayer >= detectionRadius + 5)
         {
             currentState = ActionState.Patrol;
         }
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
-        transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
+        agent.destination = destinationPosition;
+        //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
         enemy.ChangeMovementSpeed(1f, 0.3f);
 
     }
@@ -150,11 +179,12 @@ public class GhoulFSM : FSM
 
         //rotates enemy towards their target
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
 
-        //move forward
-        //controller.Move(Vector3.forward * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        ////move forward
+        //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        agent.destination = destinationPosition;
         enemy.ChangeMovementSpeed(0f, 0.3f);
     }
 

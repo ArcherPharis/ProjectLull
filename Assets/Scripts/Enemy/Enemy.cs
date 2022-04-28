@@ -6,8 +6,9 @@ public class Enemy : Damagable
 {
     Inventory damageTakenFromPlayerBullet;
     [SerializeField] Player player;
-    [SerializeField] float meleeDamageAmount;
+    public float meleeDamageAmount;
     [SerializeField] Animator animator;
+    [SerializeField] BoxCollider playerDamageHitBox;
     int animationSpeed;
     int deathIndex;
     public float speed;
@@ -37,8 +38,20 @@ public class Enemy : Damagable
     }
     public void Attack()
     {
-        player.DealDamage(meleeDamageAmount);
+        animator.SetTrigger("Attack");
     }
+
+    public void HitBoxOn()
+    {
+        playerDamageHitBox.enabled = true;
+    }
+
+    public void HitBoxOff()
+    {
+        playerDamageHitBox.enabled = false;
+    }
+
+
 
 
 
