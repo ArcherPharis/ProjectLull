@@ -7,6 +7,7 @@ public class Player : Damagable
 {
     public List<AbilityBase> abilities;
     [SerializeField] AbilityBase currentEquippedAbility;
+    ThirdPersonController tpc;
     public float elapsedTime;
     bool canUseAbility = false;
     GameObject storeObject = null;
@@ -19,6 +20,7 @@ public class Player : Damagable
         currentEquippedAbility = abilities[0];
         elapsedTime = currentEquippedAbility.coolDown;
         animator = GetComponent<Animator>();
+        tpc = GetComponent<ThirdPersonController>();
         AbilityInit();
         
     }
@@ -38,6 +40,7 @@ public class Player : Damagable
         if (Health <= 0)
         {
             base.Die();
+            tpc.isDisabled = true;
             animator.SetTrigger("Die");
 
         }

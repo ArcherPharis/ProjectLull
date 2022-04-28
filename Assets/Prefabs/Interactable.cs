@@ -6,7 +6,7 @@ using System.Linq;
 public abstract class Interactable: MonoBehaviour
 {
     [SerializeField] Item item;
-    public virtual void InteractItem()
+    public virtual void InteractItem() 
     {
         Debug.Log("We reached here.");
         Inventory playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
