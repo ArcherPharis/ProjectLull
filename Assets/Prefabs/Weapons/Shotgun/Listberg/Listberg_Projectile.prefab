@@ -9931,6 +9931,7 @@ MonoBehaviour:
   gravityDrop: -4
   damage: 20
   localAccuracy: 0
+  bulletType: 1
 --- !u!1 &556771554060059199
 GameObject:
   m_ObjectHideFlags: 0
@@ -29735,6 +29736,7 @@ MonoBehaviour:
   gravityDrop: -5
   damage: 20
   localAccuracy: 0
+  bulletType: 1
 --- !u!1 &4459467859675246463
 GameObject:
   m_ObjectHideFlags: 0
@@ -34795,6 +34797,7 @@ MonoBehaviour:
   gravityDrop: -5
   damage: 20
   localAccuracy: 0
+  bulletType: 1
 --- !u!1 &8530557882511514475
 GameObject:
   m_ObjectHideFlags: 0
@@ -39715,3 +39718,4 @@ MonoBehaviour:
   gravityDrop: -5
   damage: 20
   localAccuracy: 0
+  bulletType: 1

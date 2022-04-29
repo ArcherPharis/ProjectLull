@@ -9,13 +9,15 @@ public class Damagable: MonoBehaviour
     public float Health
     {
         get { return health = Mathf.Clamp(health, 0, health); }
-        set { health = value; }
+        set { health = value;  }
     }
 
     public void DealDamage(float damageDealt)
     {
         Health -= damageDealt;
     }
+
+
 
     public virtual void Die()
     {

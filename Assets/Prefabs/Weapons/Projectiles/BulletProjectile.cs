@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
+    public enum BulletType
+    {
+        Pistol, Shotgun, None
+    }
+
     private Rigidbody rigidBody;
     [SerializeField] GameObject hitEffect;
     [Range(0, -5)]
@@ -13,6 +18,7 @@ public class BulletProjectile : MonoBehaviour
     bool collided = false;
     Vector3 offset;
     public float localAccuracy;
+    public BulletType bulletType;
 
 
 

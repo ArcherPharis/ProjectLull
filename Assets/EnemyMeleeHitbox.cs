@@ -22,6 +22,7 @@ public class EnemyMeleeHitbox : MonoBehaviour
         if (other.name == "Player")
         {
             Player player = other.GetComponent<Player>();
+            player.OnHit();
             player.DealDamage(enemy.meleeDamageAmount);
         }
     }

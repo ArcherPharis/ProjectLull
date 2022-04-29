@@ -1037,6 +1037,10 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 60326878}
+    - target: {fileID: 5076117801486039442, guid: 490c2a6921cde664ba9626a318452312, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
     - target: {fileID: 5076117801486039454, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2914,7 +2918,7 @@ PrefabInstance:
       objectReference: {fileID: 1460775167}
     - target: {fileID: 1238280372329389033, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: meleeDamageAmount
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4459455337368811843, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: m_Speed

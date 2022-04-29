@@ -8,7 +8,7 @@ public class GhoulFSM : FSM
 {
     public enum ActionState
     {
-        None, Patrol, Chase, AgressiveChase, Attack, Dead
+        None, Patrol, Chase, AgressiveChase, Attack, UnderFire, Dead
     }
 
     public ActionState currentState;
@@ -56,6 +56,7 @@ public class GhoulFSM : FSM
             case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1f, 3f); break;
             case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3f, 12f); break;
             case ActionState.AgressiveChase: UpdateAggressiveChase(); SetSpeedParams(3.5f,12f); break;
+            case ActionState.UnderFire: UpdateUnderFireState(); SetSpeedParams(4f, 12f); break;
             case ActionState.Attack: UpdateAttackState(); break;
             case ActionState.Dead: UpdateDeadState(); break;
         }
@@ -66,25 +67,41 @@ public class GhoulFSM : FSM
         }
     }
 
+    private void UpdateUnderFireState()
+    {
+        destinationPosition = playerTransform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+        agent.destination = destinationPosition;
+
+        if (agent.remainingDistance <= 5.0f)
+        {
+            currentState = ActionState.AgressiveChase;
+        }
+
+
+
+    }
+
     private void UpdateAttackState()
     {
         //destinationPosition = playerTransform.position;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
-
+        Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
         if (distance >= 0.1f && distance < 1.5f)
         {
-            agent.isStopped = true;
-            Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+            //agent.isStopped = true;
             Attack();
 
         }
         else if (elapsedTime >= meleeAttackRate && distance > 1.6f)
         {
-            agent.isStopped = false;
+            //agent.isStopped = false;
             currentState = ActionState.AgressiveChase;
         }
-        agent.isStopped = false;
+
+        //agent.isStopped = false;
 
 
     }
@@ -99,6 +116,7 @@ public class GhoulFSM : FSM
         if (!isDead)
         {
             isDead = true;
+            agent.isStopped = true;
             enemy.Die();
         }
     }
@@ -170,6 +188,13 @@ public class GhoulFSM : FSM
         {
             Debug.Log("Reached destination point \n" + "....calculating next point");
             FindNextPoint();
+
+
+        }
+        else if (enemy.OnHealthChange())
+        {
+
+            currentState = ActionState.UnderFire;
         }
         else if(Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
         {
@@ -187,6 +212,7 @@ public class GhoulFSM : FSM
         agent.destination = destinationPosition;
         enemy.ChangeMovementSpeed(0f, 0.3f);
     }
+
 
     private void FindNextPoint()
     {

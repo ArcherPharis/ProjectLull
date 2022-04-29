@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
 using System;
 using Random = UnityEngine.Random;
@@ -17,6 +18,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] LayerMask aimColliderMask = new LayerMask();
     [SerializeField] Transform whatIsBeingAimedAt;
     [SerializeField] Player player;
+    PlayerInput pInput; //consider just moving everything over here...
     public bool abilityInUse;
     Animator animator;
     ThirdPersonController thirdPersonController;

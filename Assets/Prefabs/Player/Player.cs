@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Player : Damagable
 {
     public List<AbilityBase> abilities;
     [SerializeField] AbilityBase currentEquippedAbility;
+    PlayerInput playerInput;
     ThirdPersonController tpc;
     public float elapsedTime;
     bool canUseAbility = false;
@@ -20,6 +22,7 @@ public class Player : Damagable
         currentEquippedAbility = abilities[0];
         elapsedTime = currentEquippedAbility.coolDown;
         animator = GetComponent<Animator>();
+        playerInput = GetComponent<PlayerInput>();
         tpc = GetComponent<ThirdPersonController>();
         AbilityInit();
         
@@ -42,6 +45,7 @@ public class Player : Damagable
             base.Die();
             tpc.isDisabled = true;
             animator.SetTrigger("Die");
+            playerInput.SwitchCurrentActionMap("UI");
 
         }
     }
@@ -80,6 +84,30 @@ public class Player : Damagable
     public void AbilityInit()
     {
         currentEquippedAbility.Init();
+    }
+
+    public void OnHit()
+    {
+        
+        animator.SetTrigger("HitReact");
+    }
+
+    public void HitReact()
+    {
+        if (Health >= 0)
+        {
+            Debug.Log("First event");
+            tpc.isDisabled = true;
+        }
+    }
+    public void HitRecovery()
+    {
+        if (Health >= 0)
+        {
+            Debug.Log("are we reaching this?");
+            tpc.isDisabled = false;
+        }
+
     }
 
     public GameObject FindCloestStorableItem()
