@@ -12,6 +12,7 @@ public class Player : Damagable
     ThirdPersonController tpc;
     public float elapsedTime;
     bool canUseAbility = false;
+    public bool playerTeleported;
     GameObject storeObject = null;
     Animator animator;
 
@@ -57,6 +58,7 @@ public class Player : Damagable
         {
             currentEquippedAbility.ApplySkillEffect();
             canUseAbility = true;
+
             
         }
 
@@ -68,6 +70,7 @@ public class Player : Damagable
         {
             currentEquippedAbility.UnapplySkillEffect();
             elapsedTime = 0;
+
             canUseAbility = false;
         }
 
@@ -108,6 +111,11 @@ public class Player : Damagable
             tpc.isDisabled = false;
         }
 
+    }
+
+    void PlayerTeleported(bool condition)
+    {
+       playerTeleported = condition;
     }
 
     public GameObject FindCloestStorableItem()

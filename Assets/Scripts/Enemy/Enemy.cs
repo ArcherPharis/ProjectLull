@@ -35,11 +35,18 @@ public class Enemy : Damagable
     public override void Die()
     {
         base.Die();
+        CapsuleCollider hitbox = GetComponent<CapsuleCollider>();
+        hitbox.enabled = false;
         Destroy(gameObject, 5f);
         animator.SetFloat(deathIndex, Random.Range(0, 2));
         animator.SetTrigger("Die");
         
     }
+    public void SetConfusedState(bool condition)
+    {
+        animator.SetBool("Confused", condition);
+    }
+
 
     public bool OnHealthChange()
     {

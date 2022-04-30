@@ -148,6 +148,7 @@ public class Teleportation : AbilityBase
                 GameObject spawnedVFX = Instantiate(vfx, player.transform.position + fasd, player.transform.rotation);
                 VisualEffect efx = spawnedVFX.GetComponent<VisualEffect>();
                 efx.Play();
+                player.playerTeleported = true;
                 yield return new WaitForSeconds(0.3f);
                 player.transform.position = mousePosition;
                 efx.Stop();
@@ -159,6 +160,7 @@ public class Teleportation : AbilityBase
                 VisualEffect efx2 = spawnedVFX2.GetComponent<VisualEffect>();
                 efx2.Play();
                 ResetTeleportationCamera();
+                player.playerTeleported = false;
                 yield return new WaitForSeconds(0.3f);
                 efx2.Stop();
                 Destroy(spawnedVFX2, 5f);

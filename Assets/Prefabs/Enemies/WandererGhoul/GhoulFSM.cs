@@ -8,31 +8,26 @@ public class GhoulFSM : FSM
 {
     public enum ActionState
     {
-        None, Patrol, Chase, AgressiveChase, Attack, UnderFire, Dead
+        None, Patrol, Chase, AgressiveChase, Attack, UnderFire, Confused, Dead
     }
-
+    //aggressive chase means the enemy will not go into the confused state and can only be lost by putting alot of distance between
+    //you and them. let's put some sort of visual indication of that. However, dodging as they attack you will cause them to go
+    //into their confused state.
     public ActionState currentState;
-    //[SerializeField] float speed;
-    //[SerializeField] float rotateSpeed;
     [SerializeField] Enemy enemy;
     [SerializeField] float detectionRadius;
+    [SerializeField] float confusedWonderRadius;
+    float patrolElapseTime;
     NavMeshAgent agent;
     bool isDead;
-    CharacterController controller;
-
-    //chase and attack are pretty similar, consider combining the two.
-    //or just keep attack and make it harder for the enemy to lose interest in you once they get close enough compared to chase.
-
-    //consider making an idle state in between patrolling states.
-    //also need to add if they get shot at, or I guess just take damage *while* in patrol state, to immediately come after the
-    //player. They'll give up after..let's say 10 seconds and if they never enter the chase state, they will go back to patrol
-
+    Player player;
 
     protected override void Initialize()
     {
         currentState = ActionState.Patrol;
         isDead = false;
         elapsedTime = 0.0f;
+        patrolElapseTime = 0.0f;
         meleeAttackRate = 2.0f;
         agent = GetComponent<NavMeshAgent>();
 
@@ -40,7 +35,7 @@ public class GhoulFSM : FSM
         FindNextPoint();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        controller = GetComponent<CharacterController>();
+        player = playerObject.GetComponent<Player>();
         playerTransform = playerObject.transform;
 
         if (!playerTransform)
@@ -58,13 +53,67 @@ public class GhoulFSM : FSM
             case ActionState.AgressiveChase: UpdateAggressiveChase(); SetSpeedParams(3.5f,12f); break;
             case ActionState.UnderFire: UpdateUnderFireState(); SetSpeedParams(4f, 12f); break;
             case ActionState.Attack: UpdateAttackState(); break;
+            case ActionState.Confused: UpdateConfusedState(); break;
             case ActionState.Dead: UpdateDeadState(); break;
         }
         elapsedTime += Time.deltaTime;
+        patrolElapseTime += Time.deltaTime;
         if(enemy.Health <= 0)
         {
             currentState = ActionState.Dead;
         }
+    }
+
+    private void UpdateConfusedState()
+    {
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+        
+
+        if (elapsedTime >= 5)
+        {
+            
+            Vector3 newPosition = InsideSphere(transform.position, confusedWonderRadius);
+            destinationPosition = newPosition;
+            agent.SetDestination(destinationPosition);
+            enemy.SetConfusedState(false);
+            elapsedTime = 0;
+
+            if(patrolElapseTime >= 20f)
+            {
+                currentState = ActionState.Patrol;
+                patrolElapseTime = 0f;
+            }
+        }
+
+        else if(agent.remainingDistance <= agent.stoppingDistance)
+        {
+            enemy.SetConfusedState(true);
+        }
+
+        if(Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
+        {
+            currentState = ActionState.AgressiveChase;
+            enemy.SetConfusedState(false);
+        }
+        if (enemy.OnHealthChange())
+        {
+            currentState = ActionState.UnderFire;
+            enemy.SetConfusedState(false);
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
+
+    }
+
+     Vector3 InsideSphere(Vector3 originPosition, float distance)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
+        randomDirection += originPosition;
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randomDirection, out navHit, distance, -1);
+        return navHit.position;
     }
 
     private void UpdateUnderFireState()
@@ -77,6 +126,10 @@ public class GhoulFSM : FSM
         if (agent.remainingDistance <= 5.0f)
         {
             currentState = ActionState.AgressiveChase;
+        }
+        else if (player.playerTeleported)
+        {
+            currentState = ActionState.Confused;
         }
 
 
@@ -99,6 +152,10 @@ public class GhoulFSM : FSM
         {
             //agent.isStopped = false;
             currentState = ActionState.AgressiveChase;
+        }
+        else if (player.playerTeleported)
+        {
+            currentState = ActionState.Confused;
         }
 
         //agent.isStopped = false;
@@ -173,6 +230,10 @@ public class GhoulFSM : FSM
         {
             currentState = ActionState.Patrol;
         }
+        else if (player.playerTeleported)
+        {
+            currentState = ActionState.Confused;
+        }
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
         //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
@@ -193,7 +254,6 @@ public class GhoulFSM : FSM
         }
         else if (enemy.OnHealthChange())
         {
-
             currentState = ActionState.UnderFire;
         }
         else if(Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
