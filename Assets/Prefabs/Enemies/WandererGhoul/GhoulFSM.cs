@@ -17,6 +17,7 @@ public class GhoulFSM : FSM
     [SerializeField] Enemy enemy;
     [SerializeField] float detectionRadius;
     [SerializeField] float confusedWonderRadius;
+    [SerializeField] float lookForPlayerTime = 10f;
     float patrolElapseTime;
     NavMeshAgent agent;
     bool isDead;
@@ -57,7 +58,7 @@ public class GhoulFSM : FSM
             case ActionState.Dead: UpdateDeadState(); break;
         }
         elapsedTime += Time.deltaTime;
-        patrolElapseTime += Time.deltaTime;
+        
         if(enemy.Health <= 0)
         {
             currentState = ActionState.Dead;
@@ -77,8 +78,9 @@ public class GhoulFSM : FSM
             agent.SetDestination(destinationPosition);
             enemy.SetConfusedState(false);
             elapsedTime = 0;
+            
 
-            if(patrolElapseTime >= 20f)
+            if (patrolElapseTime >= lookForPlayerTime)
             {
                 currentState = ActionState.Patrol;
                 patrolElapseTime = 0f;
@@ -87,6 +89,7 @@ public class GhoulFSM : FSM
 
         else if(agent.remainingDistance <= agent.stoppingDistance)
         {
+            patrolElapseTime += Time.deltaTime;
             enemy.SetConfusedState(true);
         }
 
