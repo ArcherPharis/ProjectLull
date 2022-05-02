@@ -9,17 +9,53 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject sidearmSlotOne;
     [SerializeField] GameObject primarySlotOne;
     [SerializeField] GameObject currentlyEquippedWeapon;
-    //public int currentWeaponAmmo;
-    [SerializeField] List<Item> inventory = new List<Item>();
+    public Item currentlyEquippedItem;
+    [SerializeField] List<Item> utilityBelt = new List<Item>();
+    [SerializeField] List<Item> ammoPouch = new List<Item>();
+    [SerializeField] UIInventoryManager UIManager;
     [SerializeField] int PistolAmmo;
     [SerializeField] int ShotGunAmmo;
     [SerializeField] Transform weaponSlot;
     public bool nearItem = false;
     public Interactable quededItem;
+    int itemIndex = 0;
 
-    public List<Item> ItemInventory()
+    private void Start()
     {
-        return inventory;
+        if(utilityBelt.Count != 0)
+        {
+            currentlyEquippedItem = utilityBelt[0];
+        }
+    }
+
+    public void CycleEquippedItem()
+    {
+        itemIndex = (itemIndex + 1) % utilityBelt.Count;
+        currentlyEquippedItem =  utilityBelt[itemIndex];
+    }
+
+    public void UseItem()
+    {
+        currentlyEquippedItem.ApplyItemEffects();
+        utilityBelt.Remove(currentlyEquippedItem);
+        if(utilityBelt.Count > 0)
+        {
+            CycleEquippedItem();
+        }
+        else
+        {
+            currentlyEquippedItem = null;
+        }
+    }
+
+    public List<Item> UtilityBelt()
+    {
+        return utilityBelt;
+    }
+
+    public List<Item> AmmoPouch()
+    {
+        return ammoPouch;
     }
 
     public int PAmmo
@@ -34,6 +70,15 @@ public class Inventory : MonoBehaviour
         set { ShotGunAmmo = value; }
     }
 
+    public void UpdateAmmoAmount()
+    {
+        UIManager.UpdateAmmoPouch();
+    }
+
+    public void UpdateUtility()
+    {
+        UIManager.UpdateUtilityBelt();
+    }
     public void SwitchWeapon()
     {
 
@@ -59,6 +104,12 @@ public class Inventory : MonoBehaviour
 
         CurrentWeapon().ReloadWeapon();
 
+    }
+
+    public void TurnOnInventoryScreen()
+    {
+        UIManager.EnableCanvas();
+        
     }
 
     public void FireWeapon()

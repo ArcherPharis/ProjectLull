@@ -134,6 +134,33 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3965a32-57d9-4591-a1fd-136d72ba9e68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""02bebf02-651d-4d11-a5db-6cbbc4c1acbb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""6994f657-85c8-4873-9c05-8fc788b85ea2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -466,6 +493,39 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                     ""action"": ""MoveItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab84c739-d4a9-466c-b13d-eb70ca1b8800"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e76969f8-5150-4a59-bdc5-b727840525b6"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ToggleItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""439cd5a4-7265-4d1c-9fcb-c2e26bd0c98f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -562,6 +622,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_UseAbility = m_Player.FindAction("UseAbility", throwIfNotFound: true);
         m_Player_MoveItem = m_Player.FindAction("MoveItem", throwIfNotFound: true);
+        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
+        m_Player_ToggleItem = m_Player.FindAction("ToggleItem", throwIfNotFound: true);
+        m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -636,6 +699,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_UseAbility;
     private readonly InputAction m_Player_MoveItem;
+    private readonly InputAction m_Player_Inventory;
+    private readonly InputAction m_Player_ToggleItem;
+    private readonly InputAction m_Player_UseItem;
     public struct PlayerActions
     {
         private @InpurActions m_Wrapper;
@@ -652,6 +718,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @UseAbility => m_Wrapper.m_Player_UseAbility;
         public InputAction @MoveItem => m_Wrapper.m_Player_MoveItem;
+        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
+        public InputAction @ToggleItem => m_Wrapper.m_Player_ToggleItem;
+        public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -697,6 +766,15 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                 @MoveItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
                 @MoveItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
                 @MoveItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveItem;
+                @Inventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
+                @ToggleItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleItem;
+                @ToggleItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleItem;
+                @ToggleItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleItem;
+                @UseItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -737,6 +815,15 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
                 @MoveItem.started += instance.OnMoveItem;
                 @MoveItem.performed += instance.OnMoveItem;
                 @MoveItem.canceled += instance.OnMoveItem;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @ToggleItem.started += instance.OnToggleItem;
+                @ToggleItem.performed += instance.OnToggleItem;
+                @ToggleItem.canceled += instance.OnToggleItem;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
             }
         }
     }
@@ -824,6 +911,9 @@ public partial class @InpurActions : IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnUseAbility(InputAction.CallbackContext context);
         void OnMoveItem(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnToggleItem(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

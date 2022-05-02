@@ -18,6 +18,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] LayerMask aimColliderMask = new LayerMask();
     [SerializeField] Transform whatIsBeingAimedAt;
     [SerializeField] Player player;
+    [SerializeField] CinemachineBrain brain;
     PlayerInput pInput; //consider just moving everything over here...
     public bool abilityInUse;
     Animator animator;
@@ -43,7 +44,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             inputActions = new InpurActions();
         }
 
-
+        pInput = GetComponent<PlayerInput>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         playerInput = GetComponent<InputComponent>();
         animator = GetComponent<Animator>();
@@ -53,8 +54,37 @@ public class ThirdPersonShooterController : MonoBehaviour
         inputActions.Player.EquipSidearm.performed += ctx => SwitchWeapon();
         inputActions.Player.EquipPrimary.performed += ctx => SwitchWeapon();
         inputActions.Player.Reload.performed += ctx => ReloadWeapon();
+        inputActions.Player.Inventory.performed += ctx => InventoryMenu();
+        inputActions.Player.ToggleItem.performed += ctx => ToggleEquippedItem();
+        inputActions.Player.UseItem.performed += ctx => UseItem();
         inventory = GetComponent<Inventory>();
         inventory.EquipSidearmSlotOne();
+
+    }
+
+    private void UseItem()
+    {
+        inventory.UseItem();
+    }
+
+    private void ToggleEquippedItem()
+    {
+        inventory.CycleEquippedItem();
+    }
+
+    private void InventoryMenu()
+    {
+        inventory.TurnOnInventoryScreen();
+        if(pInput.currentActionMap.name == "Player")
+        {
+            pInput.SwitchCurrentActionMap("UI");
+            brain.enabled = false;
+        }
+        else if (pInput.currentActionMap.name =="UI")
+        {
+            pInput.SwitchCurrentActionMap("Player");
+            brain.enabled = true;
+        }
         
     }
 

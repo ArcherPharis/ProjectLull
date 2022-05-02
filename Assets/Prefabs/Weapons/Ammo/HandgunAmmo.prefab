@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4983044149933108559}
   - component: {fileID: 3599699033195201683}
-  - component: {fileID: 3966772960762142890}
+  - component: {fileID: 7427389463777603164}
   m_Layer: 0
   m_Name: HandgunAmmo
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1565984509326650022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8979517870859601963}
@@ -44,12 +44,12 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565984509326650022}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3966772960762142890
+--- !u!114 &7427389463777603164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1565984509326650022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a66cc4779c60c4e99a28f7440d305a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1645768729b3ff449ae5272482893352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f2825823e41a48f4d89b2a55c46a9fb3, type: 2}
@@ -829,11 +829,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2740941862373590649, guid: 7156595b49af1ef4a99b4eeaae53d6aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.062
+      value: -0.046
       objectReference: {fileID: 0}
     - target: {fileID: 2740941862373590649, guid: 7156595b49af1ef4a99b4eeaae53d6aa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2740941862373590649, guid: 7156595b49af1ef4a99b4eeaae53d6aa, type: 3}
       propertyPath: m_LocalRotation.w

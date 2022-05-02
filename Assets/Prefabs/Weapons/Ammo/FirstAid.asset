@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8115c2699f08064ebb942d4c4765e8a, type: 3}
-  m_Name: HandgunAmmo10
+  m_Script: {fileID: 11500000, guid: de23b8aa9cc8f9743a037a0587304fda, type: 3}
+  m_Name: FirstAid
   m_EditorClassIdentifier: 
-  amount: 10
-  itemImage: {fileID: 21300000, guid: abb804d1e34b4454e89ddc2823566c63, type: 3}
+  amount: 1
+  itemImage: {fileID: 21300000, guid: c8a219ddff971c34996f0e9c984cbe59, type: 3}
   playerInventory: {fileID: 0}
-  AmmoCount: 12
+  AmmoCount: 0
+  healAmount: 50
