@@ -18,10 +18,12 @@ public class UIUseItemSlot : MonoBehaviour
     {
         if (inventory.currentlyEquippedItem != null)
         {
+            image.enabled = true;
             image.sprite = inventory.currentlyEquippedItem.itemImage;
         }
         else
         {
+            image.enabled = false;
             image.sprite = null;
         }
     }

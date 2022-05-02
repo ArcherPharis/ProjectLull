@@ -673,7 +673,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &252960146
 GameObject:
@@ -1350,19 +1350,19 @@ PrefabInstance:
       objectReference: {fileID: 910073284}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: PistolAmmo
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: ShotGunAmmo
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: ammoPouch.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: utilityBelt.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: ammoPouch.Array.data[0]
@@ -1395,7 +1395,7 @@ PrefabInstance:
     - target: {fileID: 630487088, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: utilityBelt.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: fceb35609602d92409cc9ba30dfc0be8, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1341158249, guid: 490c2a6921cde664ba9626a318452312, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
@@ -1759,7 +1759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5437862746439181497, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5437862746439181497, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3679,7 +3679,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!64 &1525983274
 MeshCollider:
@@ -4081,7 +4081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5437862746439181497, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5437862746439181497, guid: a8c8c798c19dbac4693cf06e303add4d, type: 3}
       propertyPath: m_LocalPosition.x

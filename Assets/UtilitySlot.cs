@@ -7,7 +7,7 @@ using TMPro;
 public class UtilitySlot : MonoBehaviour
 {
     public Image image;
-    public TextMeshProUGUI text;
+    public Item item;
     // Start is called before the first frame update
     void Start()
     {

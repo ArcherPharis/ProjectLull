@@ -30,21 +30,28 @@ public class Inventory : MonoBehaviour
 
     public void CycleEquippedItem()
     {
-        itemIndex = (itemIndex + 1) % utilityBelt.Count;
-        currentlyEquippedItem =  utilityBelt[itemIndex];
+        if (utilityBelt.Count > 0)
+        {
+            itemIndex = (itemIndex + 1) % utilityBelt.Count;
+            currentlyEquippedItem = utilityBelt[itemIndex];
+        }
     }
 
     public void UseItem()
     {
-        currentlyEquippedItem.ApplyItemEffects();
-        utilityBelt.Remove(currentlyEquippedItem);
-        if(utilityBelt.Count > 0)
+        if (currentlyEquippedItem != null)
         {
-            CycleEquippedItem();
-        }
-        else
-        {
-            currentlyEquippedItem = null;
+            currentlyEquippedItem.ApplyItemEffects();
+            UIManager.RefreshUtilityIcons();
+            utilityBelt.Remove(currentlyEquippedItem);
+            if (utilityBelt.Count > 0)
+            {
+                CycleEquippedItem();
+            }
+            else
+            {
+                currentlyEquippedItem = null;
+            }
         }
     }
 

@@ -27,6 +27,22 @@ public class UIInventoryManager : MonoBehaviour
         
     }
 
+    public void RefreshUtilityIcons()
+    {
+        foreach(UtilitySlot slot in utilityBeltSlots)
+        {
+            if (slot.item != null)
+            {
+        
+                slot.image.enabled = false;
+                slot.item.usedItem = false;
+                slot.item = null;
+                    
+                
+            }
+        }
+    }
+
     void PopulateAmmoPouch()
     {
         foreach (Transform pouchSlots in AmmoPouchUI.transform)
@@ -68,10 +84,8 @@ public class UIInventoryManager : MonoBehaviour
             for (int i = 0; i < playerInventory.UtilityBelt().Count; i++)
             {
                 utilityBeltSlots[i].image.enabled = true;
-                //utilityBeltSlots[i].text.enabled = true;
-                //playerInventory.UtilityBelt()[i].SetCorrectItemCount();//not needed
-                //utilityBeltSlots[i].text.text = playerInventory.AmmoPouch()[i].AmmoCount.ToString();
                 utilityBeltSlots[i].image.sprite = playerInventory.UtilityBelt()[i].itemImage;
+                utilityBeltSlots[i].item = playerInventory.UtilityBelt()[i];
 
             }
         }
@@ -87,7 +101,15 @@ public class UIInventoryManager : MonoBehaviour
             
             for (int i = 0; i < playerInventory.AmmoPouch().Count; i++)
             {
+
+
                 ammoPouchSlots[i].text.text = playerInventory.AmmoPouch()[i].AmmoType().ToString();
+                if(playerInventory.AmmoPouch()[i].AmmoType() <= 0)
+                {
+                    ammoPouchSlots[i].image.enabled = false;
+                    ammoPouchSlots[i].text.enabled = false;
+                }
+
             }
             Time.timeScale = 0f;
         }
@@ -109,17 +131,10 @@ public class UIInventoryManager : MonoBehaviour
             utilityBeltSlots.Add(utilityItems);
             for (int i = 0; i < playerInventory.UtilityBelt().Count; i++)
             {
-                //if (playerInventory.AmmoPouch()[i] == null)
-                //{//note for tommorrow, it doesn't work because we aren't setting to null, we are removing it
-                //    //so we need to find a different way to remove the affected image's sprite. ammoslot
-                //    //could possibly know of what is in it, and when that becomes null, we can remove the image.
-                //    Debug.Log("Are we getting here?");
-                //    ammoPouchSlots[i].image.enabled = false;
-                //    ammoPouchSlots[i].image.enabled = false;
-                //}
-
                 utilityBeltSlots[i].image.enabled = true;
                 utilityBeltSlots[i].image.sprite = playerInventory.UtilityBelt()[i].itemImage;
+                utilityBeltSlots[i].item = playerInventory.UtilityBelt()[i];
+
 
             }
         }

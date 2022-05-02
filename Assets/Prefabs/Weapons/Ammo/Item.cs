@@ -8,7 +8,9 @@ public abstract class Item : ScriptableObject
     [SerializeField] int amount;
     public Sprite itemImage;
     public Inventory playerInventory;
+    public bool usedItem;
     public int AmmoCount;
+
     public int Amount
     {
         get { return amount; }
