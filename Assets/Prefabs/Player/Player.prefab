@@ -1777,6 +1777,7 @@ MonoBehaviour:
     m_Bits: 55
   whatIsBeingAimedAt: {fileID: 0}
   player: {fileID: 5590198752997919441}
+  brain: {fileID: 0}
   abilityInUse: 0
 --- !u!114 &630487088
 MonoBehaviour:
@@ -1793,9 +1794,13 @@ MonoBehaviour:
   sidearmSlotOne: {fileID: 3922272031666287515}
   primarySlotOne: {fileID: 6531304722127645425}
   currentlyEquippedWeapon: {fileID: 0}
-  inventory: []
-  PistolAmmo: 30
-  ShotGunAmmo: 12
+  currentlyEquippedItem: {fileID: 0}
+  utilityBelt:
+  - {fileID: 11400000, guid: 29f3922af62fcfe43882eaf18b86a0a7, type: 2}
+  ammoPouch: []
+  UIManager: {fileID: 0}
+  PistolAmmo: 0
+  ShotGunAmmo: 0
   weaponSlot: {fileID: 1524839309378064974}
   nearItem: 0
   quededItem: {fileID: 0}
@@ -1811,10 +1816,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3444ebe0c85cd740ba8363a672fe91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   abilities:
-  - {fileID: 11400000, guid: 9952319b3aeb94d41a01583dce5f0f55, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   currentEquippedAbility: {fileID: 0}
-  playerInstance: {fileID: 0}
+  elapsedTime: 0
+  playerTeleported: 0
 --- !u!114 &1626663324
 MonoBehaviour:
   m_ObjectHideFlags: 0

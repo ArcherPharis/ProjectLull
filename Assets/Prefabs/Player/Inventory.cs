@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
         if (currentlyEquippedItem != null)
         {
             currentlyEquippedItem.ApplyItemEffects();
-            UIManager.RefreshUtilityIcons();
+            //UIManager.RefreshUtilityIcons();//refactor needed.
             utilityBelt.Remove(currentlyEquippedItem);
             if (utilityBelt.Count > 0)
             {

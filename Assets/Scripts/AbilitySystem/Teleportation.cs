@@ -76,7 +76,7 @@ public class Teleportation : AbilityBase
             Color32 tintColor = new Color32(0, 93, 255, 255);
             //bloom.tint.overrideState = true;
             bloom.tint.Override(tintColor);
-            bloom.intensity.Override(7.5f);
+            bloom.intensity.Override(150.5f);
             vignette.active = true;
             Time.timeScale = 0.3f;
         }
@@ -144,7 +144,7 @@ public class Teleportation : AbilityBase
                 Globals.teleportationInUse =false;
                 tpc = player.gameObject.GetComponent<ThirdPersonController>();
                 tpc.isDisabled = true;
-                Vector3 fasd = new Vector3(0, 0.2f, 0);
+                Vector3 fasd = new Vector3(0, 0.4f, 0);
                 GameObject spawnedVFX = Instantiate(vfx, player.transform.position + fasd, player.transform.rotation);
                 VisualEffect efx = spawnedVFX.GetComponent<VisualEffect>();
                 efx.Play();

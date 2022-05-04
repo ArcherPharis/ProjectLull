@@ -248,7 +248,8 @@ public class GhoulFSM : FSM
 
     private void UpdatePatrolState()
     {//finds another point once ghoul gets close to a waypoint
-        if(Vector3.Distance(transform.position, destinationPosition) <= 2f)
+        agent.stoppingDistance = 0f;
+        if(Vector3.Distance(transform.position, destinationPosition) <= 0.2f)
         {
             Debug.Log("Reached destination point \n" + "....calculating next point");
             FindNextPoint();
@@ -257,11 +258,14 @@ public class GhoulFSM : FSM
         }
         else if (enemy.OnHealthChange())
         {
+
+            agent.stoppingDistance = 1.3f;
             currentState = ActionState.UnderFire;
         }
         else if(Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
         {
             Debug.Log("*sniff* *sniff* I smell the player...switching to Chasing..");
+            agent.stoppingDistance = 1.3f;
             currentState = ActionState.Chase;
         }
 
@@ -282,15 +286,15 @@ public class GhoulFSM : FSM
         //assigns a random point from list of waypoints
         Debug.Log("...finding next point");
         int randomIndex = UnityEngine.Random.Range(0, wayPointList.Length);
-        float randomRadius = 10.0f;
+        //float randomRadius = 10.0f;
         Vector3 randomPosition = Vector3.zero;
         destinationPosition = wayPointList[randomIndex].transform.position + randomPosition;
         //checks to make sure we don't get the same number twice
-        if (IsInCurrentRange(destinationPosition))
-        {
-            randomPosition = new Vector3(UnityEngine.Random.Range(-randomRadius, randomRadius), 0.0f, UnityEngine.Random.Range(-randomRadius, randomRadius));
-            destinationPosition = wayPointList[randomIndex].transform.position + randomPosition;
-        }
+        //if (IsInCurrentRange(destinationPosition))
+        //{
+        //    randomPosition = new Vector3(UnityEngine.Random.Range(-randomRadius, randomRadius), 0.0f, UnityEngine.Random.Range(-randomRadius, randomRadius));
+        //    destinationPosition = wayPointList[randomIndex].transform.position + randomPosition;
+        //}
 
     }
 
