@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Red Key
   m_EditorClassIdentifier: 
   amount: 1
-  itemImage: {fileID: 21300000, guid: 0d840f1eb95eedd41a2f890061a9cc55, type: 3}
+  itemImage: {fileID: 21300000, guid: 8ef7a232912ca314694a72276d30390b, type: 3}
   playerInventory: {fileID: 0}
   usedItem: 0
   isKeyItem: 1

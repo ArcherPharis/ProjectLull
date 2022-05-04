@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: d8c4f8ab5e074b6498ba178d3700ede1, type: 2}
+  message: 'Press [f] to pick up: Red Key'
 --- !u!65 &8282767150633003392
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58,7 +59,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 81.7, y: 51.1, z: 91.6}
+  m_Size: {x: 81.7, y: 71.7, z: 99.6}
   m_Center: {x: 0, y: 0, z: -16.17}
 --- !u!1001 &6219096368907161588
 PrefabInstance:
@@ -123,6 +124,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: a0cda604c25e2924d8cbb5fbf3c56623, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26922741d4f09134d8e9325c134baba5, type: 2}
     - target: {fileID: 919132149155446097, guid: a0cda604c25e2924d8cbb5fbf3c56623, type: 3}
       propertyPath: m_Name
       value: Key2

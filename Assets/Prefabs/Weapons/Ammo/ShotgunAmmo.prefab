@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fceb35609602d92409cc9ba30dfc0be8, type: 2}
+  message: 'Press [f] to pick up: Shotgun Shells'
 --- !u!65 &2386765262772907114
 BoxCollider:
   m_ObjectHideFlags: 0

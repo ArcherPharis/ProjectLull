@@ -11,22 +11,47 @@ public class Door : Interactable
     {
         base.InteractItem();
         Inventory playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
-        if (playerInventory.nearItem && playerInventory.currentlyEquippedItem.name == RequiredKeyName)
+        if (playerInventory.currentlyEquippedItem != null)
         {
-            Debug.Log("Hello, I am door.");
-            animator.SetTrigger("DoorOpen");
-            triggerCollider.enabled = false;
+            if (playerInventory.nearItem && playerInventory.currentlyEquippedItem.name == RequiredKeyName)
+            {
+                Debug.Log("Hello, I am door.");
+                animator.SetTrigger("DoorOpen");
+                triggerCollider.enabled = false;
+            }
         }
+    }
+
+    public override string Message()
+    {
+        return base.Message();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player")
-        {
-            Inventory inventory = other.GetComponent<Inventory>();
-            inventory.quededItem = this;
-            inventory.nearItem = true;
-        }
+ 
+            if (other.name == "Player" )
+            {
+                Inventory inventory = other.GetComponent<Inventory>();
+                message = $"Find {RequiredKeyName} to open door.";
+                inventory.quededItem = this;
+                inventory.nearItem = true;
+
+            if (inventory.currentlyEquippedItem != null)
+            {
+                if (inventory.currentlyEquippedItem.name == RequiredKeyName)
+                {
+                    message = "Press[f] to open";
+                }
+                else
+                {
+                    message = $"Please equip the {RequiredKeyName} to open door. ";
+                }
+            }
+
+            }   
+
+        
     }
 
     private void OnTriggerExit(Collider other)

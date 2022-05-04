@@ -18,11 +18,14 @@ public class InfoBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         if (inventory.quededItem)
         {
             image.enabled = true;
-            text.text = "Press [f] to pick up: " + inventory.quededItem.name;
+            text.text = inventory.quededItem.Message();
         }
+
         else
         {
             image.enabled = false;

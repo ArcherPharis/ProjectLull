@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f2825823e41a48f4d89b2a55c46a9fb3, type: 2}
+  message: 'Press [f] to pick up: Handgun Ammo'
 --- !u!1 &2279119850206018617
 GameObject:
   m_ObjectHideFlags: 0

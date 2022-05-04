@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - Storable
   - Waypoint
+  - Door
   layers:
   - Default
   - TransparentFX

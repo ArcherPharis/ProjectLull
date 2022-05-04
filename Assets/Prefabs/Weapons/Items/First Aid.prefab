@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 29f3922af62fcfe43882eaf18b86a0a7, type: 2}
+  message: 'Press [f] to pick up: First Aid'
 --- !u!65 &7151366414948533015
 BoxCollider:
   m_ObjectHideFlags: 0
