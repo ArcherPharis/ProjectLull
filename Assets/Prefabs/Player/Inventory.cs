@@ -39,7 +39,7 @@ public class Inventory : MonoBehaviour
 
     public void UseItem()
     {
-        if (currentlyEquippedItem != null)
+        if (currentlyEquippedItem != null && !currentlyEquippedItem.isKeyItem)
         {
             currentlyEquippedItem.ApplyItemEffects();
             //UIManager.RefreshUtilityIcons();//refactor needed.

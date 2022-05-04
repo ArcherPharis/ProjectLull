@@ -9,6 +9,7 @@ public abstract class Item : ScriptableObject
     public Sprite itemImage;
     public Inventory playerInventory;
     public bool usedItem;
+    public bool isKeyItem;
     public int AmmoCount;
 
     public int Amount

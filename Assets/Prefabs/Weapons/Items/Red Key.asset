@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af086b8a939955b488490baba520099f, type: 3}
   m_Name: Red Key
   m_EditorClassIdentifier: 
-  amount: 0
-  itemImage: {fileID: 0}
+  amount: 1
+  itemImage: {fileID: 21300000, guid: 0d840f1eb95eedd41a2f890061a9cc55, type: 3}
   playerInventory: {fileID: 0}
   usedItem: 0
+  isKeyItem: 1
   AmmoCount: 0
