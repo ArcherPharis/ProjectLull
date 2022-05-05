@@ -49,7 +49,7 @@ public class GhoulFSM : FSM
     {
         switch (currentState)
         {
-            case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1f, 3f); break;
+            case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1.5f, 3f); break;
             case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3f, 12f); break;
             case ActionState.AgressiveChase: UpdateAggressiveChase(); SetSpeedParams(3.5f,12f); break;
             case ActionState.UnderFire: UpdateUnderFireState(); SetSpeedParams(4f, 12f); break;
