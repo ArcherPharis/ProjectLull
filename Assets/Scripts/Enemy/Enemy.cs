@@ -11,6 +11,7 @@ public class Enemy : Damagable
     [SerializeField] BoxCollider playerDamageHitBox;
     [SerializeField] AudioClip damageClip;
     [SerializeField] AudioClip dieClip;
+    [SerializeField] AudioClip attackClip;
     AudioSource audioSource;
     NavMeshAgent agent;
     bool hitFlinch;
@@ -73,6 +74,7 @@ public class Enemy : Damagable
     public void Attack()
     {
         animator.SetTrigger("Attack");
+        audioSource.PlayOneShot(attackClip);
     }
 
     public void HitBoxOn()

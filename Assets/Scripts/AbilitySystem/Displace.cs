@@ -103,29 +103,5 @@ public class Displace : AbilityBase
 
     }
 
-    //void SetTeleportationCamera()
-    //{
-    //    GameObject teleportationCam;
-    //    CinemachineVirtualCamera vcam;
-    //    teleportationCam = GameObject.Find("TeleportationCam");
-    //    vcam = teleportationCam.GetComponent<CinemachineVirtualCamera>();
-    //    vcam.Priority = 30;
-    //    volume = Camera.main.GetComponent<Volume>();
-
-    //    if (volume.profile.TryGet(out bloom) && volume.profile.TryGet(out vignette))
-    //    {
-    //        Color32 tintColor = new Color32(0, 93, 255, 255);
-    //        //bloom.tint.overrideState = true;
-    //        bloom.tint.Override(tintColor);
-    //        bloom.intensity.Override(7.5f);
-    //        vignette.active = true;
-    //        Time.timeScale = 0.3f;
-    //    }
-
-    //}
-
-
-
-
 
 }

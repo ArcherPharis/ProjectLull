@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 	public class InputComponent : MonoBehaviour
 	{
-		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
@@ -12,16 +11,13 @@ using UnityEngine.InputSystem;
 		public bool aim;
 		public bool shoot;
 
-		[Header("Movement Settings")]
 		public bool analogMovement;
 
-#if !UNITY_IOS || !UNITY_ANDROID
+
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
-#endif
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 
 
 
@@ -58,9 +54,7 @@ using UnityEngine.InputSystem;
 		}
 
 
-#else
-	// old input sys if we do decide to have it (most likely wont)...
-#endif
+
 
 		private void ShootInput(bool shooting)
 		{

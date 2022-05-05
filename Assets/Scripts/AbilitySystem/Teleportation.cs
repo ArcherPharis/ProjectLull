@@ -59,8 +59,6 @@ public class Teleportation : AbilityBase
         crossHair = GameObject.Find("TeleportationCrosshair").GetComponent<Image>();
         crossHair.enabled = true;
 
-      
-
     }
 
 
@@ -74,7 +72,6 @@ public class Teleportation : AbilityBase
         if (volume.profile.TryGet(out bloom) && volume.profile.TryGet(out vignette))
         {
             Color32 tintColor = new Color32(0, 93, 255, 255);
-            //bloom.tint.overrideState = true;
             bloom.tint.Override(tintColor);
             bloom.intensity.Override(150.5f);
             vignette.active = true;
@@ -124,7 +121,7 @@ public class Teleportation : AbilityBase
             }
             else
             {
-                crossHair.color = Color.magenta;
+                crossHair.color = Color.red;
             }
 
         }

@@ -10,9 +10,6 @@ public class GhoulFSM : FSM
     {
         None, Patrol, Chase, AgressiveChase, Attack, UnderFire, Confused, Dead
     }
-    //aggressive chase means the enemy will not go into the confused state and can only be lost by putting alot of distance between
-    //you and them. let's put some sort of visual indication of that. However, dodging as they attack you will cause them to go
-    //into their confused state.
     public ActionState currentState;
     [SerializeField] Enemy enemy;
     [SerializeField] float detectionRadius;
@@ -52,7 +49,7 @@ public class GhoulFSM : FSM
             case ActionState.Patrol: UpdatePatrolState(); SetSpeedParams(1.5f, 3f); break;
             case ActionState.Chase: UpdateChaseState(); SetSpeedParams(3f, 12f); break;
             case ActionState.AgressiveChase: UpdateAggressiveChase(); SetSpeedParams(3.5f,12f); break;
-            case ActionState.UnderFire: UpdateUnderFireState(); SetSpeedParams(4f, 12f); break;
+            case ActionState.UnderFire: UpdateUnderFireState(); SetSpeedParams(3.5f, 12f); break;
             case ActionState.Attack: UpdateAttackState(); break;
             case ActionState.Confused: UpdateConfusedState(); break;
             case ActionState.Dead: UpdateDeadState(); break;
@@ -67,7 +64,6 @@ public class GhoulFSM : FSM
 
     private void UpdateConfusedState()
     {
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
         
 
         if (elapsedTime >= 5)
@@ -126,7 +122,7 @@ public class GhoulFSM : FSM
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
         agent.destination = destinationPosition;
 
-        if (agent.remainingDistance <= 5.0f)
+        if (agent.remainingDistance <= 1.2f)
         {
             currentState = ActionState.AgressiveChase;
         }
@@ -141,19 +137,17 @@ public class GhoulFSM : FSM
 
     private void UpdateAttackState()
     {
-        //destinationPosition = playerTransform.position;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
         if (distance >= 0.1f && distance < 1.5f)
         {
-            //agent.isStopped = true;
+  
             Attack();
 
         }
         else if (elapsedTime >= meleeAttackRate && distance > 1.6f)
         {
-            //agent.isStopped = false;
             currentState = ActionState.AgressiveChase;
         }
         else if (player.playerTeleported)
@@ -161,7 +155,6 @@ public class GhoulFSM : FSM
             currentState = ActionState.Confused;
         }
 
-        //agent.isStopped = false;
 
 
     }
@@ -183,26 +176,25 @@ public class GhoulFSM : FSM
 
     private void UpdateAggressiveChase()
     {
-        //Vector3 playerPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z); //prevents enemy from "jumping" with player. (old system)
+        
         destinationPosition = playerTransform.position;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-        if(distance >= 0.8f && distance < detectionRadius + 15)
+        if(distance >= 0.8f && distance < detectionRadius + 10)
         {
             Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
 
             
-            //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
         }
 
         else if(distance < 1.5f)
         {
             currentState = ActionState.Attack;
         }
-        else if(distance >= detectionRadius + 15)
+        else if(distance >= detectionRadius + 10)
         {
-            currentState = ActionState.Patrol;
+            currentState = ActionState.Confused;
         }
         agent.destination = destinationPosition;
 
@@ -212,7 +204,6 @@ public class GhoulFSM : FSM
     {
         if (elapsedTime >= meleeAttackRate)
         {
-            Debug.Log("I would attack here");
             enemy.Attack();
             elapsedTime = 0.0f;
         }
@@ -239,9 +230,7 @@ public class GhoulFSM : FSM
         }
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
         agent.destination = destinationPosition;
-        //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
         enemy.ChangeMovementSpeed(1f, 0.3f);
 
     }
@@ -271,11 +260,9 @@ public class GhoulFSM : FSM
 
         //rotates enemy towards their target
         Quaternion targetRotation = Quaternion.LookRotation(destinationPosition - transform.position);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * enemy.rotateSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
 
-        ////move forward
-        //transform.Translate(Vector3.forward * Time.deltaTime * enemy.speed);
+        //move forward
         agent.destination = destinationPosition;
         enemy.ChangeMovementSpeed(0f, 0.3f);
     }
@@ -286,27 +273,8 @@ public class GhoulFSM : FSM
         //assigns a random point from list of waypoints
         Debug.Log("...finding next point");
         int randomIndex = UnityEngine.Random.Range(0, wayPointList.Length);
-        //float randomRadius = 10.0f;
         Vector3 randomPosition = Vector3.zero;
         destinationPosition = wayPointList[randomIndex].transform.position + randomPosition;
-        //checks to make sure we don't get the same number twice
-        //if (IsInCurrentRange(destinationPosition))
-        //{
-        //    randomPosition = new Vector3(UnityEngine.Random.Range(-randomRadius, randomRadius), 0.0f, UnityEngine.Random.Range(-randomRadius, randomRadius));
-        //    destinationPosition = wayPointList[randomIndex].transform.position + randomPosition;
-        //}
-
     }
 
-    private bool IsInCurrentRange(Vector3 position)
-    {
-        float xPos = Mathf.Abs(position.x - transform.position.x);
-        float zPos = Mathf.Abs(position.z - transform.position.z);
-
-        if(xPos <= 2 && zPos <= 2)
-        {
-            return true;
-        }
-        return false;
-    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damagable: MonoBehaviour
 {
-    [SerializeField] float health = 100;
+    [SerializeField] float health;
 
     public float Health
     {

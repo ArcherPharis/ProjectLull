@@ -9,6 +9,8 @@ public class Win : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(0);
         }
     }

@@ -9,6 +9,9 @@ public class Player : Damagable
 {
     public List<AbilityBase> abilities;
     [SerializeField] AbilityBase currentEquippedAbility;
+    [SerializeField] AudioClip damageClip;
+    AudioSource audioSource;
+    public float MaxHealth;
     PlayerInput playerInput;
     ThirdPersonController tpc;
     public float elapsedTime;
@@ -21,6 +24,8 @@ public class Player : Damagable
     // Start is called before the first frame update
     void Start()
     {
+        MaxHealth = Health;
+        audioSource = GetComponent<AudioSource>();
         currentEquippedAbility = abilities[0];
         elapsedTime = currentEquippedAbility.coolDown;
         animator = GetComponent<Animator>();
@@ -45,6 +50,8 @@ public class Player : Damagable
         if (Health <= 0)
         {
             base.Die();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             tpc.isDisabled = true;
             animator.SetTrigger("Die");
             Invoke("BackToTitle", 6f);
@@ -98,7 +105,7 @@ public class Player : Damagable
 
     public void OnHit()
     {
-        
+        audioSource.PlayOneShot(damageClip);
         animator.SetTrigger("HitReact");
     }
 
@@ -106,7 +113,6 @@ public class Player : Damagable
     {
         if (Health >= 0)
         {
-            Debug.Log("First event");
             tpc.isDisabled = true;
         }
     }
@@ -114,7 +120,6 @@ public class Player : Damagable
     {
         if (Health >= 0)
         {
-            Debug.Log("are we reaching this?");
             tpc.isDisabled = false;
         }
 
