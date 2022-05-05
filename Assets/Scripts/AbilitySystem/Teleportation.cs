@@ -42,8 +42,8 @@ public class Teleportation : AbilityBase
     }
     public override void UnapplySkillEffect()
     {
-        
-        player.StartCoroutine(Teleport());
+        base.UnapplySkillEffect();   
+        StartCoroutine(Teleport());
 
     }
 
@@ -140,7 +140,7 @@ public class Teleportation : AbilityBase
         if (hitTransform != null)
         {
             if (hitTransform.GetComponent<Teleportable>())
-            {//clean this up lol
+            {
                 Globals.teleportationInUse =false;
                 tpc = player.gameObject.GetComponent<ThirdPersonController>();
                 tpc.isDisabled = true;
@@ -157,6 +157,7 @@ public class Teleportation : AbilityBase
                 tpc.isDisabled = false;
                 yield return new WaitForSeconds(0.2f);
                 GameObject spawnedVFX2 = Instantiate(vfx, player.transform.position + fasd, player.transform.rotation);
+                PlayCustomAudio();
                 VisualEffect efx2 = spawnedVFX2.GetComponent<VisualEffect>();
                 efx2.Play();
                 ResetTeleportationCamera();

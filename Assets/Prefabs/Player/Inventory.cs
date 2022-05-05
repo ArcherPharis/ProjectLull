@@ -16,9 +16,16 @@ public class Inventory : MonoBehaviour
     [SerializeField] int PistolAmmo;
     [SerializeField] int ShotGunAmmo;
     [SerializeField] Transform weaponSlot;
+    [SerializeField] AudioClip itemPickupClip;
+    AudioSource audioSource;
     public bool nearItem = false;
     public Interactable quededItem;
     int itemIndex = 0;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -26,6 +33,11 @@ public class Inventory : MonoBehaviour
         {
             currentlyEquippedItem = utilityBelt[0];
         }
+    }
+
+    public void InteractAudio()
+    {
+        audioSource.PlayOneShot(itemPickupClip);
     }
 
     public void CycleEquippedItem()

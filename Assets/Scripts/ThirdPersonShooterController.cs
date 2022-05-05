@@ -115,6 +115,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         if (inventory.nearItem)
         {
             inventory.quededItem.InteractItem();
+            inventory.InteractAudio();
             inventory.nearItem = false;
             inventory.quededItem = null;
         }
@@ -194,7 +195,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             thirdPersonController.SetPlayerRotateAim(false);
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
-            thirdPersonController.MoveSpeed = 1f;
+            thirdPersonController.MoveSpeed = 0f;
             aimRigWeight = 1f;
             animator.SetLayerWeight(inventory.CurrentWeapon().AnimationID, Mathf.Lerp(animator.GetLayerWeight(inventory.CurrentWeapon().AnimationID), 1f, Time.deltaTime * 10f));
             aimingCrosshair.enabled = true;
