@@ -184,6 +184,8 @@ MonoBehaviour:
   meleeDamageAmount: 30
   animator: {fileID: 2960675381329891716}
   playerDamageHitBox: {fileID: 2432247401212431690}
+  damageClip: {fileID: 8300000, guid: 250278d504babb04690b7f2ef220f99d, type: 3}
+  dieClip: {fileID: 8300000, guid: 47feef8293dfdd14190b41f97d0fa78d, type: 3}
   speed: 0
   rotateSpeed: 0
 --- !u!114 &4503070618902778180
@@ -290,8 +292,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.122
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0

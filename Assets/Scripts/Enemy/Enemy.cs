@@ -9,6 +9,9 @@ public class Enemy : Damagable
     public float meleeDamageAmount;
     [SerializeField] Animator animator;
     [SerializeField] BoxCollider playerDamageHitBox;
+    [SerializeField] AudioClip damageClip;
+    [SerializeField] AudioClip dieClip;
+    AudioSource audioSource;
     NavMeshAgent agent;
     bool hitFlinch;
     int animationSpeed;
@@ -21,6 +24,7 @@ public class Enemy : Damagable
     {
         animationSpeed = Animator.StringToHash("Speed");
         deathIndex = Animator.StringToHash("AnimIndex");
+        audioSource = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         _health = Health;
     }
@@ -37,6 +41,7 @@ public class Enemy : Damagable
         base.Die();
         CapsuleCollider hitbox = GetComponent<CapsuleCollider>();
         hitbox.enabled = false;
+        audioSource.PlayOneShot(dieClip);
         Destroy(gameObject, 5f);
         animator.SetFloat(deathIndex, Random.Range(0, 2));
         animator.SetTrigger("Die");
@@ -53,6 +58,7 @@ public class Enemy : Damagable
         if(_health != Health)
         {
             _health = Health;
+            
             return true;
             
         }
@@ -101,6 +107,7 @@ public class Enemy : Damagable
                 {
                     Debug.Log("I got hit with a pistol");
                     animator.SetLayerWeight(1, 1);
+                    audioSource.PlayOneShot(damageClip);
                     StartCoroutine(SetWeightBack());
                     hitFlinch = true;
                     //StopCoroutine(SetWeightBack());

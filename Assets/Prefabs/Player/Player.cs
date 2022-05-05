@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : Damagable
@@ -46,9 +47,15 @@ public class Player : Damagable
             base.Die();
             tpc.isDisabled = true;
             animator.SetTrigger("Die");
+            Invoke("BackToTitle", 6f);
             playerInput.SwitchCurrentActionMap("UI");
 
         }
+    }
+
+    void BackToTitle()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void UseToggledAbility()

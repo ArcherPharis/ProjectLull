@@ -94,7 +94,7 @@ MonoBehaviour:
   hitEffect: {fileID: 1801918589960200, guid: 31e08f66ceeac5545b743dd22aeb09ec, type: 3}
   fireEffect: {fileID: 1830508508936448, guid: dd908d668ebd6824dbeefc14bfbae555, type: 3}
   firingPoint: {fileID: 5157972590333632748}
-  weaponSprite: {fileID: 21300000, guid: abb804d1e34b4454e89ddc2823566c63, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 2cf1638824ad76b469496f03adff121c, type: 3}
   AnimationID: 1
   ammoType: 0
 --- !u!82 &6249943136398702197
