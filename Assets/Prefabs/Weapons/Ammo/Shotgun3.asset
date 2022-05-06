@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Shotgun3
   m_EditorClassIdentifier: 
   amount: 3
-  itemImage: {fileID: 21300000, guid: af0ae2dbf3d1efb4f82af377950704a2, type: 3}
+  itemImage: {fileID: 21300000, guid: 2476a217feac44541a51a2ac2f0a30d3, type: 3}
   playerInventory: {fileID: 0}
-  AmmoCount: 6
+  usedItem: 0
+  isKeyItem: 0
+  AmmoCount: 3
